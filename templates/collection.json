@@ -9,30 +9,126 @@
  */
 {
   "sections": {
-    "hero": { "type": "mista-collection-hero", "settings": {} },
+    "hero": {
+      "type": "mista-collection-hero",
+      "settings": {
+        "image_alt": "",
+        "eyebrow": "Our collection",
+        "description": "<p>Discover signature fragrances crafted for every mood and every moment.</p>",
+        "height": 420,
+        "overlay": 90
+      }
+    },
     "products": {
       "type": "mista-collection-products",
       "blocks": {
-        "men": { "type": "filter_chip", "settings": { "label": "Men" } },
-        "women": { "type": "filter_chip", "settings": { "label": "Women" } },
-        "unisex": { "type": "filter_chip", "settings": { "label": "Unisex" } },
-        "sets": { "type": "filter_chip", "settings": { "label": "Discovery sets" } }
+        "men": {
+          "type": "filter_chip",
+          "settings": {
+            "collection": "men",
+            "label": "Men"
+          }
+        },
+        "women": {
+          "type": "filter_chip",
+          "settings": {
+            "collection": "women",
+            "label": "Women"
+          }
+        },
+        "unisex": {
+          "type": "filter_chip",
+          "settings": {
+            "collection": "unisix",
+            "label": "Unisex"
+          }
+        }
       },
-      "block_order": ["men", "women", "unisex", "sets"],
-      "settings": { "promo_link": "shopify://pages/about-us" }
+      "block_order": [
+        "men",
+        "women",
+        "unisex"
+      ],
+      "settings": {
+        "enable_filtering": true,
+        "sort_label": "Sort by",
+        "apply_label": "Apply",
+        "products_per_page": 16,
+        "gap": 16,
+        "empty_text": "No fragrances match these filters.",
+        "promo_heading": "More than a scent",
+        "promo_label": "Discover the story",
+        "promo_link": "shopify://pages/about-us",
+        "promo_position": 7,
+        "background": "#f7f1e8"
+      }
     },
-    "promo": { "type": "mista-promo-banner", "settings": { "eyebrow": "Your next signature", "heading": "Discover the Mista collection", "button_label": "Shop all", "button_link": "shopify://collections/all" } },
+    "promo": {
+      "type": "mista-promo-banner",
+      "settings": {
+        "image_alt": "Mista fragrance promotional collection",
+        "eyebrow": "Your next signature",
+        "heading": "Discover the Mista collection",
+        "text": "<p>Discover a scent designed to become part of your story.</p>",
+        "button_label": "Shop all",
+        "button_link": "shopify://collections/all",
+        "height": 390,
+        "mobile_height": 460,
+        "image_position": "center",
+        "overlay": 75
+      }
+    },
     "usp": {
       "type": "mista-usp",
       "blocks": {
-        "quality": { "type": "feature", "settings": { "icon": "leaf", "heading": "Premium quality", "text": "Finest ingredients" } },
-        "lasting": { "type": "feature", "settings": { "icon": "return", "heading": "Long lasting", "text": "All-day performance" } },
-        "secure": { "type": "feature", "settings": { "icon": "shield", "heading": "Secure payment", "text": "Protected checkout" } },
-        "shipping": { "type": "feature", "settings": { "icon": "truck", "heading": "Free shipping", "text": "On qualifying orders" } }
+        "quality": {
+          "type": "feature",
+          "settings": {
+            "icon": "leaf",
+            "heading": "Premium quality",
+            "text": "Finest ingredients"
+          }
+        },
+        "lasting": {
+          "type": "feature",
+          "settings": {
+            "icon": "return",
+            "heading": "Long lasting",
+            "text": "All-day performance"
+          }
+        },
+        "secure": {
+          "type": "feature",
+          "settings": {
+            "icon": "shield",
+            "heading": "Secure payment",
+            "text": "Protected checkout"
+          }
+        },
+        "shipping": {
+          "type": "feature",
+          "settings": {
+            "icon": "truck",
+            "heading": "Free shipping",
+            "text": "On qualifying orders"
+          }
+        }
       },
-      "block_order": ["quality", "lasting", "secure", "shipping"],
-      "settings": {}
+      "block_order": [
+        "quality",
+        "lasting",
+        "secure",
+        "shipping"
+      ],
+      "settings": {
+        "columns": 4
+      }
     }
   },
-  "order": ["hero", "products", "promo", "usp"]
+  "order": [
+    "hero",
+    "products",
+    "promo",
+    "usp"
+  ]
 }
