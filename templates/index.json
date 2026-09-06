@@ -293,6 +293,7 @@
           ]
         }
       },
+      "disabled": true,
       "name": "t:names.products_carousel",
       "settings": {
         "collection": "frontpage",
@@ -316,7 +317,6 @@
     },
     "best_sellers": {
       "type": "mista-featured-products",
-      "disabled": true,
       "settings": {
         "eyebrow": "Most loved",
         "heading": "Best sellers",
@@ -324,7 +324,7 @@
         "collection": "frontpage",
         "products": [],
         "button_label": "Shop all",
-        "products_to_show": 8,
+        "products_to_show": 4,
         "columns": 4,
         "gap": 16,
         "background": "#f7f1e8"
