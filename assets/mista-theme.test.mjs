@@ -133,3 +133,18 @@ test('storefront loads production-minified stylesheets', () => {
   assert.match(stylesheets, /'base\.min\.css'/);
   assert.match(layout, /'mista-theme\.min\.css'/);
 });
+
+test('featured products automatically use the store catalog when no collection is selected', () => {
+  const featuredProducts = readFileSync(new URL('../sections/mista-featured-products.liquid', import.meta.url), 'utf8');
+
+  assert.match(featuredProducts, /if featured_collection == blank or featured_collection\.products_count == 0/);
+  assert.match(featuredProducts, /assign featured_collection = collections\.all/);
+  assert.match(featuredProducts, /for product in featured_collection\.products/);
+});
+
+test('collection hero copy keeps the global page gutter on desktop and mobile', () => {
+  assert.match(
+    themeCss,
+    /\.mista-collection-hero__content\s*\{[^}]*width:\s*var\(--mista-page\);[^}]*margin-inline:\s*auto;/
+  );
+});
