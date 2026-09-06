@@ -9,48 +9,259 @@
  */
 {
   "sections": {
-    "hero": { "type": "mista-hero", "settings": { "button_link": "shopify://collections/all" } },
+    "hero": {
+      "type": "mista-hero",
+      "settings": {
+        "image_alt": "Mista perfume collection",
+        "eyebrow": "Our collection",
+        "heading": "A scent for every you",
+        "text": "<p>Discover signature fragrance collections, crafted for every mood and every moment.</p>",
+        "button_label": "Explore collections",
+        "button_link": "shopify://collections/all",
+        "secondary_label": "",
+        "secondary_link": "",
+        "height": 600,
+        "image_position": "center",
+        "alignment": "left",
+        "overlay": 90
+      }
+    },
     "usp": {
       "type": "mista-usp",
       "blocks": {
-        "quality": { "type": "feature", "settings": { "icon": "leaf", "heading": "Premium quality", "text": "Finest ingredients" } },
-        "lasting": { "type": "feature", "settings": { "icon": "return", "heading": "Long lasting", "text": "All-day performance" } },
-        "secure": { "type": "feature", "settings": { "icon": "shield", "heading": "Secure payment", "text": "100% secure checkout" } },
-        "shipping": { "type": "feature", "settings": { "icon": "truck", "heading": "Free shipping", "text": "On orders over $75" } }
+        "quality": {
+          "type": "feature",
+          "settings": {
+            "icon": "leaf",
+            "heading": "Premium quality",
+            "text": "Finest ingredients"
+          }
+        },
+        "lasting": {
+          "type": "feature",
+          "settings": {
+            "icon": "return",
+            "heading": "Long lasting",
+            "text": "All-day performance"
+          }
+        },
+        "secure": {
+          "type": "feature",
+          "settings": {
+            "icon": "shield",
+            "heading": "Secure payment",
+            "text": "100% secure checkout"
+          }
+        },
+        "shipping": {
+          "type": "feature",
+          "settings": {
+            "icon": "truck",
+            "heading": "Free shipping",
+            "text": "On orders over $75"
+          }
+        }
       },
-      "block_order": ["quality", "lasting", "secure", "shipping"],
-      "settings": {}
+      "block_order": [
+        "quality",
+        "lasting",
+        "secure",
+        "shipping"
+      ],
+      "settings": {
+        "columns": 4
+      }
     },
     "collections": {
       "type": "mista-collections",
       "blocks": {
-        "men": { "type": "collection", "settings": { "title": "For him", "link_label": "Explore collection" } },
-        "women": { "type": "collection", "settings": { "title": "For her", "link_label": "Explore collection" } },
-        "unisex": { "type": "collection", "settings": { "title": "Unisex", "link_label": "Explore collection" } },
-        "sets": { "type": "collection", "settings": { "title": "Discovery sets", "link_label": "Explore collection" } }
+        "men": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "title": "For him",
+            "link_label": "Explore collection"
+          }
+        },
+        "women": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "title": "For her",
+            "link_label": "Explore collection"
+          }
+        },
+        "unisex": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "title": "Unisex",
+            "link_label": "Explore collection"
+          }
+        }
       },
-      "block_order": ["men", "women", "unisex", "sets"],
-      "settings": { "button_link": "shopify://collections" }
+      "block_order": [
+        "men",
+        "women",
+        "unisex"
+      ],
+      "settings": {
+        "eyebrow": "Find your signature",
+        "heading": "Our collections",
+        "button_label": "View all",
+        "button_link": "shopify://collections",
+        "columns": 3,
+        "gap": 16,
+        "background": "#f7f1e8"
+      }
     },
-    "best_sellers": { "type": "mista-featured-products", "settings": { "collection": "all", "products_to_show": 8 } },
-    "promo": { "type": "mista-promo-banner", "settings": { "button_link": "shopify://collections/all" } },
-    "story": { "type": "mista-brand-story", "settings": { "button_link": "shopify://pages/about" } },
+    "best_sellers": {
+      "type": "mista-featured-products",
+      "settings": {
+        "eyebrow": "Most loved",
+        "heading": "Best sellers",
+        "collection": "all",
+        "button_label": "Shop all",
+        "products_to_show": 8,
+        "columns": 4,
+        "gap": 16,
+        "background": "#f7f1e8"
+      }
+    },
+    "promo": {
+      "type": "mista-promo-banner",
+      "settings": {
+        "image_alt": "Mista fragrance promotional collection",
+        "eyebrow": "Elevate your everyday",
+        "heading": "Luxury fragrance. Lasting impressions.",
+        "text": "<p>Discover a scent designed to become part of your story.</p>",
+        "button_label": "Shop all",
+        "button_link": "shopify://collections/all",
+        "height": 390,
+        "mobile_height": 460,
+        "image_position": "center",
+        "overlay": 75
+      }
+    },
+    "story": {
+      "type": "mista-brand-story",
+      "settings": {
+        "image_alt": "Mista perfume craftsmanship",
+        "eyebrow": "Our story",
+        "heading": "The art of perfumery",
+        "text": "<p>At Mista Perfume, we believe a fragrance is more than a scent—it is a memory, a mood, a part of your story. Every composition is built with intention and made to be lived in.</p>",
+        "button_label": "Discover our story",
+        "button_link": "shopify://pages/about",
+        "background": "#ffffff"
+      }
+    },
     "testimonials": {
       "type": "mista-testimonials",
       "blocks": {
-        "one": { "type": "testimonial", "settings": { "quote": "The balance is beautiful—soft at first, then warm and unforgettable.", "author": "Sara M.", "detail": "Verified buyer" } },
-        "two": { "type": "testimonial", "settings": { "quote": "The bottle feels like an object of design and the fragrance lasts into the evening.", "author": "Noor A.", "detail": "Verified buyer" } },
-        "three": { "type": "testimonial", "settings": { "quote": "I found my everyday signature. Refined, modern, and never overpowering.", "author": "Lina K.", "detail": "Verified buyer" } }
+        "one": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "The balance is beautiful—soft at first, then warm and unforgettable.",
+            "author": "Sara M.",
+            "detail": "Verified buyer"
+          }
+        },
+        "two": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "The bottle feels like an object of design and the fragrance lasts into the evening.",
+            "author": "Noor A.",
+            "detail": "Verified buyer"
+          }
+        },
+        "three": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "I found my everyday signature. Refined, modern, and never overpowering.",
+            "author": "Lina K.",
+            "detail": "Verified buyer"
+          }
+        }
       },
-      "block_order": ["one", "two", "three"],
-      "settings": {}
+      "block_order": [
+        "one",
+        "two",
+        "three"
+      ],
+      "settings": {
+        "eyebrow": "Loved by you",
+        "heading": "Stories in every scent",
+        "columns": 3,
+        "gap": 18
+      }
     },
     "social": {
       "type": "mista-social-gallery",
-      "blocks": { "one": { "type": "image", "settings": {} }, "two": { "type": "image", "settings": {} }, "three": { "type": "image", "settings": {} }, "four": { "type": "image", "settings": {} }, "five": { "type": "image", "settings": {} } },
-      "block_order": ["one", "two", "three", "four", "five"],
-      "settings": {}
+      "blocks": {
+        "one": {
+          "type": "image",
+          "settings": {
+            "alt": "Mista perfume lifestyle",
+            "link": ""
+          }
+        },
+        "two": {
+          "type": "image",
+          "settings": {
+            "alt": "Mista perfume lifestyle",
+            "link": ""
+          }
+        },
+        "three": {
+          "type": "image",
+          "settings": {
+            "alt": "Mista perfume lifestyle",
+            "link": ""
+          }
+        },
+        "four": {
+          "type": "image",
+          "settings": {
+            "alt": "Mista perfume lifestyle",
+            "link": ""
+          }
+        },
+        "five": {
+          "type": "image",
+          "settings": {
+            "alt": "Mista perfume lifestyle",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "one",
+        "two",
+        "three",
+        "four",
+        "five"
+      ],
+      "settings": {
+        "eyebrow": "@mistaperfume",
+        "heading": "The Mista mood",
+        "text": "<p>Follow the rituals, stories, and scents shaping our world.</p>",
+        "columns": 5,
+        "gap": 8,
+        "background": "#f7f1e8"
+      }
     }
   },
-  "order": ["hero", "usp", "collections", "best_sellers", "promo", "story", "testimonials", "social"]
+  "order": [
+    "hero",
+    "usp",
+    "collections",
+    "best_sellers",
+    "promo",
+    "story",
+    "testimonials",
+    "social"
+  ]
 }
