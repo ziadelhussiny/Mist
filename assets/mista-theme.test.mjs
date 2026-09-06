@@ -134,17 +134,27 @@ test('storefront loads production-minified stylesheets', () => {
   assert.match(layout, /'mista-theme\.min\.css'/);
 });
 
-test('featured products automatically use the store catalog when no collection is selected', () => {
+test('featured products support all products, a collection, or manual product selection', () => {
   const featuredProducts = readFileSync(new URL('../sections/mista-featured-products.liquid', import.meta.url), 'utf8');
+  const homepageSource = readFileSync(new URL('../templates/index.json', import.meta.url), 'utf8');
+  const homepage = JSON.parse(homepageSource.slice(homepageSource.indexOf('{')));
 
+  assert.match(featuredProducts, /"id":\s*"product_source"/);
+  assert.match(featuredProducts, /"value":\s*"all"/);
+  assert.match(featuredProducts, /"value":\s*"collection"/);
+  assert.match(featuredProducts, /"value":\s*"products"/);
   assert.match(featuredProducts, /"type":\s*"product_list"/);
   assert.match(featuredProducts, /"id":\s*"products"/);
+  assert.match(featuredProducts, /assign product_source = section\.settings\.product_source \| default: 'all'/);
   assert.match(featuredProducts, /assign manually_selected_products = section\.settings\.products/);
-  assert.match(featuredProducts, /if featured_collection == blank or featured_collection\.products_count == 0/);
-  assert.match(featuredProducts, /assign featured_collection = collections\.all/);
+  assert.match(featuredProducts, /assign featured_collection = collections\['all'\]/);
+  assert.match(featuredProducts, /if product_source == 'collection' and section\.settings\.collection != blank/);
+  assert.match(featuredProducts, /if product_source == 'products'/);
   assert.match(featuredProducts, /for product in manually_selected_products/);
   assert.match(featuredProducts, /for product in featured_collection\.products/);
   assert.doesNotMatch(featuredProducts, /preview_title|Noir Intense|Rose Allure|Oud Elegance|Citrus Bleu/);
+  assert.equal(homepage.sections.best_sellers.settings.product_source, 'all');
+  assert.equal(homepage.sections.best_sellers.settings.collection, 'all');
 });
 
 test('collection hero copy keeps the global page gutter on desktop and mobile', () => {

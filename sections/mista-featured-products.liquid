@@ -1,16 +1,17 @@
+{% assign product_source = section.settings.product_source | default: 'all' %}
 {% assign manually_selected_products = section.settings.products %}
-{% assign featured_collection = section.settings.collection %}
-{% if featured_collection == blank or featured_collection.products_count == 0 %}
-  {% assign featured_collection = collections.all %}
+{% assign featured_collection = collections['all'] %}
+{% if product_source == 'collection' and section.settings.collection != blank %}
+  {% assign featured_collection = section.settings.collection %}
 {% endif %}
 <section class="mista-section" style="--mista-section-bg:{{ section.settings.background }};--mista-gap:{{ section.settings.gap }}px">
   <div class="mista-shell">
     <header class="mista-section-head"><div><p class="mista-eyebrow">{{ section.settings.eyebrow }}</p><h2 class="mista-heading mista-heading--section">{{ section.settings.heading }}</h2></div>{% if featured_collection != blank %}<a class="mista-button mista-button--outline" href="{{ featured_collection.url }}">{{ section.settings.button_label }}</a>{% endif %}</header>
     <div class="mista-product-grid" style="--mista-columns:{{ section.settings.columns }}">
-      {% if manually_selected_products != blank %}
-        {% for product in manually_selected_products limit: section.settings.products_to_show %}{% render 'mista-product-card', product: product %}{% endfor %}
+      {% if product_source == 'products' %}
+        {% for product in manually_selected_products limit: section.settings.products_to_show %}{% render 'mista-product-card', product: product %}{% else %}{% if request.design_mode %}<div class="mista-copy" style="grid-column:1/-1">Choose products in this section, or change Product source to All products.</div>{% endif %}{% endfor %}
       {% else %}
-        {% for product in featured_collection.products limit: section.settings.products_to_show %}{% render 'mista-product-card', product: product %}{% else %}{% if request.design_mode %}<div class="mista-copy" style="grid-column:1/-1">No storefront products were found. Select products in this section, or publish products to the Online Store sales channel.</div>{% endif %}{% endfor %}
+        {% for product in featured_collection.products limit: section.settings.products_to_show %}{% render 'mista-product-card', product: product %}{% else %}{% if request.design_mode %}<div class="mista-copy" style="grid-column:1/-1">No storefront products were found. Publish a product to the Online Store sales channel or choose another collection.</div>{% endif %}{% endfor %}
       {% endif %}
     </div>
   </div>
@@ -23,8 +24,9 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Most loved" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Best sellers" },
-    { "type": "product_list", "id": "products", "label": "Products (optional)", "limit": 12 },
-    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "select", "id": "product_source", "label": "Product source", "options": [{ "value": "all", "label": "All products" }, { "value": "collection", "label": "Selected collection" }, { "value": "products", "label": "Selected products" }], "default": "all" },
+    { "type": "collection", "id": "collection", "label": "Collection (when source is Selected collection)" },
+    { "type": "product_list", "id": "products", "label": "Products (when source is Selected products)", "limit": 12 },
     { "type": "text", "id": "button_label", "label": "Button", "default": "Shop all" },
     { "type": "range", "id": "products_to_show", "label": "Products", "min": 4, "max": 12, "step": 1, "default": 8 },
     { "type": "range", "id": "columns", "label": "Desktop columns", "min": 3, "max": 5, "step": 1, "default": 4 },
