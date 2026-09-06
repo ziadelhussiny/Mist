@@ -2116,5 +2116,49 @@
         "default": "equal-width-buttons"
       }
     ]
+  },
+  {
+    "name": "Mista brand system",
+    "settings": [
+      { "type": "header", "content": "Brand colors" },
+      { "type": "color", "id": "mista_cream", "label": "Cream", "default": "#F7F1E8" },
+      { "type": "color", "id": "mista_beige", "label": "Warm beige", "default": "#E8D8C3" },
+      { "type": "color", "id": "mista_navy", "label": "Deep navy", "default": "#0D1B2A" },
+      { "type": "color", "id": "mista_gold", "label": "Champagne gold", "default": "#C99A57" },
+      { "type": "color", "id": "mista_soft_gold", "label": "Soft gold", "default": "#DDBE8A" },
+      { "type": "color", "id": "mista_charcoal", "label": "Charcoal", "default": "#242424" },
+      { "type": "color", "id": "mista_muted", "label": "Muted gray", "default": "#77736D" },
+      { "type": "color", "id": "mista_white", "label": "White", "default": "#FFFFFF" },
+      { "type": "header", "content": "Layout and cards" },
+      { "type": "range", "id": "mista_page_width", "label": "Page width", "min": 1100, "max": 1920, "step": 20, "unit": "px", "default": 1440 },
+      { "type": "range", "id": "mista_section_spacing", "label": "Section spacing", "min": 32, "max": 120, "step": 4, "unit": "px", "default": 72 },
+      { "type": "range", "id": "mista_card_radius", "label": "Card radius", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 3 },
+      { "type": "range", "id": "mista_button_radius", "label": "Button radius", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 3 },
+      { "type": "select", "id": "mista_product_ratio", "label": "Product image ratio", "options": [{ "value": "1 / 1", "label": "Square" }, { "value": "4 / 5", "label": "Portrait" }, { "value": "3 / 4", "label": "Tall portrait" }], "default": "4 / 5" },
+      { "type": "header", "content": "Badges and pills" },
+      { "type": "color", "id": "mista_badge_bg", "label": "Badge background", "default": "#F7F1E8" },
+      { "type": "color", "id": "mista_badge_text", "label": "Badge text", "default": "#242424" },
+      { "type": "color", "id": "mista_badge_border", "label": "Badge border", "default": "#C99A57" },
+      { "type": "range", "id": "mista_badge_radius", "label": "Badge radius", "min": 12, "max": 18, "step": 1, "unit": "px", "default": 16 },
+      { "type": "range", "id": "mista_badge_font_size", "label": "Badge font size", "min": 9, "max": 14, "step": 1, "unit": "px", "default": 11 },
+      { "type": "range", "id": "mista_badge_padding_x", "label": "Horizontal padding", "min": 6, "max": 20, "step": 1, "unit": "px", "default": 12 },
+      { "type": "range", "id": "mista_badge_padding_y", "label": "Vertical padding", "min": 4, "max": 12, "step": 1, "unit": "px", "default": 6 },
+      { "type": "color", "id": "mista_selected_bg", "label": "Selected background", "default": "#0D1B2A" },
+      { "type": "color", "id": "mista_selected_text", "label": "Selected text", "default": "#FFFFFF" },
+      { "type": "color", "id": "mista_selected_border", "label": "Selected border", "default": "#0D1B2A" },
+      { "type": "color", "id": "mista_sale_bg", "label": "Sale badge background", "default": "#A44331" },
+      { "type": "color", "id": "mista_sale_text", "label": "Sale badge text", "default": "#FFFFFF" },
+      { "type": "color", "id": "mista_sold_bg", "label": "Sold out background", "default": "#77736D" },
+      { "type": "color", "id": "mista_sold_text", "label": "Sold out text", "default": "#FFFFFF" },
+      { "type": "header", "content": "Support and social" },
+      { "type": "text", "id": "mista_support_email", "label": "Support email", "default": "support@mistaperfume.com" },
+      { "type": "text", "id": "mista_support_phone", "label": "Support phone" },
+      { "type": "text", "id": "mista_support_whatsapp", "label": "WhatsApp number" },
+      { "type": "text", "id": "mista_support_hours", "label": "Support hours", "default": "Monday–Friday, 9am–6pm" },
+      { "type": "url", "id": "mista_instagram", "label": "Instagram" },
+      { "type": "url", "id": "mista_facebook", "label": "Facebook" },
+      { "type": "url", "id": "mista_tiktok", "label": "TikTok" },
+      { "type": "checkbox", "id": "mista_enable_motion", "label": "Enable subtle motion", "default": true }
+    ]
   }
 ]

@@ -1,0 +1,33 @@
+<section>
+  <div class="mista-editorial-hero" style="min-height:clamp(300px,36vw,520px)"><div class="mista-editorial-hero__media">{% if section.settings.hero_desktop_image != blank %}<picture>{% if section.settings.hero_mobile_image != blank %}<source media="(max-width: 767px)" srcset="{{ section.settings.hero_mobile_image | image_url: width: 900 }}">{% endif %}{{ section.settings.hero_desktop_image | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '750,1100,1500,2000,2400', sizes: '100vw', alt: section.settings.hero_alt }}</picture>{% else %}<div class="mista-hero__fallback"></div>{% endif %}</div><div class="mista-editorial-hero__overlay"></div><div class="mista-editorial-hero__content"><div><p class="mista-eyebrow">{{ section.settings.hero_eyebrow }}</p><h1 class="mista-heading">{{ section.settings.hero_heading }}</h1><div class="mista-copy">{{ section.settings.hero_text }}</div></div></div></div>
+  <div class="mista-section"><div class="mista-shell mista-contact-grid"><div class="mista-contact-methods">
+    {% if settings.mista_support_email != blank %}<div class="mista-contact-method">{% render 'mista-icon', name: 'sparkle' %}<div><strong>Email support</strong><a href="mailto:{{ settings.mista_support_email }}">{{ settings.mista_support_email }}</a></div></div>{% endif %}
+    {% if settings.mista_support_whatsapp != blank %}<div class="mista-contact-method">{% render 'mista-icon', name: 'heart' %}<div><strong>WhatsApp support</strong><a href="https://wa.me/{{ settings.mista_support_whatsapp | remove: ' ' | remove: '+' }}">{{ settings.mista_support_whatsapp }}</a></div></div>{% endif %}
+    {% if settings.mista_support_phone != blank %}<div class="mista-contact-method">{% render 'mista-icon', name: 'return' %}<div><strong>Phone support</strong><a href="tel:{{ settings.mista_support_phone }}">{{ settings.mista_support_phone }}</a></div></div>{% endif %}
+    <div class="mista-contact-method">{% render 'mista-icon', name: 'return' %}<div><strong>Support hours</strong><span>{{ settings.mista_support_hours }}</span></div></div>
+  </div><div><p class="mista-eyebrow">{{ section.settings.form_eyebrow }}</p><h2 class="mista-heading mista-heading--section">{{ section.settings.form_heading }}</h2>{% form 'contact', class: 'mista-form' %}{% if form.posted_successfully? %}<p class="mista-field--full" role="status">{{ section.settings.success_message }}</p>{% endif %}{% if form.errors %}<div class="mista-field--full" role="alert">{{ form.errors | default_errors }}</div>{% endif %}<div class="mista-field"><label for="ContactName">Full name</label><input id="ContactName" type="text" name="contact[name]" value="{{ form.name }}" autocomplete="name" required></div><div class="mista-field"><label for="ContactEmail">Email address</label><input id="ContactEmail" type="email" name="contact[email]" value="{{ form.email }}" autocomplete="email" required></div><div class="mista-field mista-field--full"><label for="ContactSubject">Subject</label><select id="ContactSubject" name="contact[subject]"><option>Order support</option><option>Shipping question</option><option>Returns question</option><option>Product advice</option><option>Other</option></select></div><div class="mista-field mista-field--full"><label for="ContactMessage">Your message</label><textarea id="ContactMessage" name="contact[body]" required>{{ form.body }}</textarea></div><button class="mista-button mista-button--primary mista-field--full" type="submit">{{ section.settings.submit_label }}</button>{% endform %}</div></div></div>
+  <div class="mista-section" style="--mista-section-bg:#fff"><div class="mista-shell mista-faq"><header class="mista-section-head mista-section-head--center"><p class="mista-eyebrow">{{ section.settings.faq_eyebrow }}</p><h2 class="mista-heading mista-heading--section">{{ section.settings.faq_heading }}</h2></header><div class="mista-accordions">{% for block in section.blocks %}<div class="mista-accordion" {{ block.shopify_attributes }}><button class="mista-accordion__button" type="button" data-mista-accordion-button aria-expanded="false" aria-controls="ContactFaq-{{ section.id }}-{{ block.id }}"><span>{{ block.settings.question }}</span>{% render 'mista-icon', name: 'chevron' %}</button><div id="ContactFaq-{{ section.id }}-{{ block.id }}" class="mista-accordion__panel" hidden>{{ block.settings.answer }}</div></div>{% endfor %}</div></div></div>
+</section>
+{% schema %}
+{
+  "name": "Mista contact page",
+  "tag": "section",
+  "class": "mista-contact-section",
+  "settings": [
+    { "type": "image_picker", "id": "hero_desktop_image", "label": "Desktop contact hero" },
+    { "type": "image_picker", "id": "hero_mobile_image", "label": "Mobile contact hero" },
+    { "type": "text", "id": "hero_alt", "label": "Hero alt text", "default": "Mista perfume customer care" },
+    { "type": "text", "id": "hero_eyebrow", "label": "Hero eyebrow", "default": "We’re here" },
+    { "type": "text", "id": "hero_heading", "label": "Hero heading", "default": "We’re here for you" },
+    { "type": "richtext", "id": "hero_text", "label": "Hero text", "default": "<p>Have a question? Our online support team is ready to help with orders, shipping, returns, and fragrance advice.</p>" },
+    { "type": "text", "id": "form_eyebrow", "label": "Form eyebrow", "default": "Contact us" },
+    { "type": "text", "id": "form_heading", "label": "Form heading", "default": "Send us a message" },
+    { "type": "text", "id": "submit_label", "label": "Submit label", "default": "Send message" },
+    { "type": "text", "id": "success_message", "label": "Success message", "default": "Thank you. Our support team will be in touch soon." },
+    { "type": "text", "id": "faq_eyebrow", "label": "FAQ eyebrow", "default": "Quick answers" },
+    { "type": "text", "id": "faq_heading", "label": "FAQ heading", "default": "Frequently asked questions" }
+  ],
+  "blocks": [{ "type": "faq", "name": "FAQ", "limit": 10, "settings": [{ "type": "text", "id": "question", "label": "Question", "default": "Where is my order?" }, { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Use the tracking link in your shipping confirmation email. If you need help, send us your order number.</p>" }] }],
+  "presets": [{ "name": "Mista contact page", "blocks": [{ "type": "faq", "settings": { "question": "Where is my order?" } }, { "type": "faq", "settings": { "question": "What are your shipping times?" } }, { "type": "faq", "settings": { "question": "What is your return policy?" } }, { "type": "faq", "settings": { "question": "Do you offer international shipping?" } }] }]
+}
+{% endschema %}

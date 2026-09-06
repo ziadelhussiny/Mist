@@ -1,0 +1,49 @@
+{% liquid
+  assign card_product = product
+  assign current_variant = card_product.selected_or_first_available_variant
+  assign badge = blank
+  if card_product.available == false
+    assign badge = 'Sold out'
+  elsif current_variant.compare_at_price > current_variant.price
+    assign badge = 'Sale'
+  elsif card_product.tags contains 'Best Seller'
+    assign badge = 'Best Seller'
+  elsif card_product.tags contains 'New'
+    assign badge = 'New'
+  endif
+%}
+<article class="mista-product-card" data-product-handle="{{ card_product.handle }}">
+  <div class="mista-product-card__media">
+    <a href="{{ card_product.url }}" aria-label="{{ card_product.title | escape }}">
+      {% if card_product.featured_media %}
+        {{ card_product.featured_media | image_url: width: 900 | image_tag: loading: 'lazy', widths: '240,360,480,640,900', sizes: '(min-width: 990px) 25vw, 50vw', class: 'mista-product-card__image mista-product-card__image--primary', alt: card_product.featured_media.alt | default: card_product.title }}
+        {% if card_product.media[1] %}
+          {{ card_product.media[1] | image_url: width: 900 | image_tag: loading: 'lazy', widths: '240,360,480,640,900', sizes: '(min-width: 990px) 25vw, 50vw', class: 'mista-product-card__image mista-product-card__image--secondary', alt: card_product.media[1].alt | default: card_product.title }}
+        {% endif %}
+      {% else %}
+        <div class="mista-product-card__placeholder" aria-hidden="true"><span>M</span></div>
+      {% endif %}
+    </a>
+    {% if badge != blank %}<span class="mista-badge mista-badge--{% if badge == 'Sale' %}sale{% elsif badge == 'Sold out' %}sold{% else %}light{% endif %}">{{ badge }}</span>{% endif %}
+    <button class="mista-wishlist" type="button" data-mista-wishlist="{{ card_product.handle }}" aria-label="Save {{ card_product.title | escape }}" aria-pressed="false">{% render 'mista-icon', name: 'heart' %}</button>
+  </div>
+  <div class="mista-product-card__body">
+    <a class="mista-product-card__title" href="{{ card_product.url }}">{{ card_product.title }}</a>
+    <div class="mista-stars" aria-label="{% if card_product.metafields.reviews.rating.value %}{{ card_product.metafields.reviews.rating.value }} out of 5{% else %}Rated 5 out of 5{% endif %}">
+      <span aria-hidden="true">★★★★★</span>
+      {% if card_product.metafields.reviews.rating_count.value %}<small>({{ card_product.metafields.reviews.rating_count.value }})</small>{% endif %}
+    </div>
+    <div class="mista-price">
+      <strong>{{ current_variant.price | money }}</strong>
+      {% if current_variant.compare_at_price > current_variant.price %}<s>{{ current_variant.compare_at_price | money }}</s>{% endif %}
+    </div>
+    {% form 'product', card_product, class: 'mista-quick-add', data-mista-ajax-cart: '' %}
+      <input type="hidden" name="id" value="{{ current_variant.id }}">
+      <input type="hidden" name="quantity" value="1">
+      <button class="mista-button mista-button--primary mista-button--compact" type="submit" {% unless current_variant.available %}disabled{% endunless %} data-loading-label="Adding…" data-added-label="Added">
+        {% if current_variant.available %}Add to cart{% else %}Sold out{% endif %}
+      </button>
+      <p class="mista-form-status" data-mista-form-status role="status"></p>
+    {% endform %}
+  </div>
+</article>

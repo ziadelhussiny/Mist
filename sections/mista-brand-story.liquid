@@ -1,0 +1,22 @@
+<section class="mista-story" style="background:{{ section.settings.background }}">
+  <div class="mista-story__media">{% if section.settings.image != blank %}{{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width: 768px) 55vw, 100vw', alt: section.settings.image_alt }}{% else %}<div class="mista-story__placeholder" aria-hidden="true"></div>{% endif %}</div>
+  <div class="mista-story__content"><p class="mista-eyebrow">{{ section.settings.eyebrow }}</p><h2 class="mista-heading mista-heading--section">{{ section.settings.heading }}</h2><div class="mista-copy">{{ section.settings.text }}</div>{% if section.settings.button_label != blank %}<a class="mista-button mista-button--outline" href="{{ section.settings.button_link }}">{{ section.settings.button_label }}</a>{% endif %}</div>
+</section>
+{% schema %}
+{
+  "name": "Mista brand story",
+  "tag": "section",
+  "class": "mista-brand-story-section",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Story image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "Mista perfume craftsmanship" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our story" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The art of perfumery" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>At Mista Perfume, we believe a fragrance is more than a scent—it is a memory, a mood, a part of your story. Every composition is built with intention and made to be lived in.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button", "default": "Discover our story" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "color", "id": "background", "label": "Background", "default": "#FFFFFF" }
+  ],
+  "presets": [{ "name": "Mista brand story" }]
+}
+{% endschema %}

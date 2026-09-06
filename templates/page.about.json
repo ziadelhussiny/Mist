@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "main": {
+      "type": "mista-about",
+      "blocks": {
+        "mission": { "type": "value", "settings": { "icon": "sparkle", "heading": "Our mission", "text": "To make beautifully composed fragrance an expressive part of everyday life." } },
+        "vision": { "type": "value", "settings": { "icon": "heart", "heading": "Our vision", "text": "A world where scent is personal, confident, and memorable." } },
+        "values": { "type": "value", "settings": { "icon": "shield", "heading": "Our values", "text": "Quality, authenticity, curiosity, and care in every detail." } },
+        "ingredients": { "type": "value", "settings": { "icon": "leaf", "heading": "Fine ingredients", "text": "Thoughtful materials selected for balance, texture, and lasting character." } },
+        "quality": { "type": "value", "settings": { "icon": "shield", "heading": "Product quality", "text": "Precise formulations and careful finishing from composition to bottle." } },
+        "authenticity": { "type": "value", "settings": { "icon": "heart", "heading": "Authenticity", "text": "Original Mista bottles and fragrances, made to feel unmistakably yours." } }
+      },
+      "block_order": ["mission", "vision", "values", "ingredients", "quality", "authenticity"],
+      "settings": { "banner_link": "shopify://collections/all" }
+    }
+  },
+  "order": ["main"]
+}

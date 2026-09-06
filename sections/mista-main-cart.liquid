@@ -1,0 +1,42 @@
+<section class="mista-cart">
+  <div class="mista-shell">
+    <header class="mista-cart__title"><p class="mista-eyebrow">{{ section.settings.eyebrow }}</p><h1 class="mista-heading mista-heading--section">{{ section.settings.heading }}</h1>{% unless cart.empty? %}<p class="mista-copy">{{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %}</p>{% endunless %}</header>
+    {% if cart.empty? %}<div class="mista-cart__empty"><p class="mista-copy" style="margin-inline:auto">{{ section.settings.empty_text }}</p><a class="mista-button mista-button--primary" href="{{ routes.all_products_collection_url }}">{{ section.settings.continue_label }}</a></div>{% else %}
+      <div class="mista-cart__layout">
+        <form action="{{ routes.cart_url }}" method="post" id="MistaCartItems">
+          {% for item in cart.items %}
+            <article class="mista-cart-item">
+              <a href="{{ item.url }}">{% if item.image %}{{ item.image | image_url: width: 320 | image_tag: loading: 'lazy', widths: '160,240,320', class: 'mista-cart-item__image', alt: item.image.alt | default: item.product.title }}{% endif %}</a>
+              <div><a class="mista-cart-item__title" href="{{ item.url }}">{{ item.product.title }}</a>{% unless item.product.has_only_default_variant %}<p class="mista-cart-item__variant">{{ item.variant.title }}</p>{% endunless %}<div class="mista-cart-item__actions"><div class="mista-quantity"><button type="button" data-mista-quantity="-1" aria-controls="CartQuantity-{{ forloop.index }}" aria-label="Decrease {{ item.product.title | escape }} quantity">{% render 'mista-icon', name: 'minus' %}</button><input id="CartQuantity-{{ forloop.index }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0" inputmode="numeric" aria-label="Quantity for {{ item.product.title | escape }}"><button type="button" data-mista-quantity="1" aria-controls="CartQuantity-{{ forloop.index }}" aria-label="Increase {{ item.product.title | escape }} quantity">{% render 'mista-icon', name: 'plus' %}</button></div><a class="mista-cart-item__remove" href="{{ item.url_to_remove }}">Remove</a></div></div>
+              <span class="mista-cart-item__price">{{ item.final_line_price | money }}</span>
+            </article>
+          {% endfor %}
+          <button class="mista-button mista-button--outline" type="submit" name="update" style="margin-top:18px">{{ section.settings.update_label }}</button>
+        </form>
+        <aside class="mista-cart__summary" aria-label="Order summary"><h2>{{ section.settings.summary_heading }}</h2><div class="mista-summary-line"><span>Subtotal</span><strong>{{ cart.items_subtotal_price | money }}</strong></div>{% if cart.cart_level_discount_applications.size > 0 %}{% for discount in cart.cart_level_discount_applications %}<div class="mista-summary-line"><span>{{ discount.title }}</span><strong>-{{ discount.total_allocated_amount | money }}</strong></div>{% endfor %}{% endif %}<div class="mista-summary-line"><span>Shipping</span><span>{{ section.settings.shipping_calculated }}</span></div>
+          <form class="mista-discount" data-mista-discount-form><label class="visually-hidden" for="MistaDiscount">Discount code</label><input id="MistaDiscount" name="discount" placeholder="Discount code"><button class="mista-button mista-button--gold" type="submit">Apply</button></form>
+          <div class="mista-summary-line mista-summary-line--total"><span>Total</span><strong>{{ cart.total_price | money }}</strong></div>
+          <form action="{{ routes.cart_url }}" method="post"><button class="mista-button mista-button--gold" type="submit" name="checkout" style="width:100%">{{ section.settings.checkout_label }}</button></form>
+          <div class="mista-trust-row"><div class="mista-trust-item">{% render 'mista-icon', name: 'truck' %}<span>Free shipping</span></div><div class="mista-trust-item">{% render 'mista-icon', name: 'shield' %}<span>Secure payment</span></div><div class="mista-trust-item">{% render 'mista-icon', name: 'return' %}<span>Easy returns</span></div></div>
+        </aside>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Mista cart",
+  "tag": "section",
+  "class": "mista-main-cart-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Your selection" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Your cart" },
+    { "type": "text", "id": "summary_heading", "label": "Summary heading", "default": "Order summary" },
+    { "type": "text", "id": "shipping_calculated", "label": "Shipping text", "default": "Calculated at checkout" },
+    { "type": "text", "id": "update_label", "label": "Update label", "default": "Update cart" },
+    { "type": "text", "id": "checkout_label", "label": "Checkout label", "default": "Checkout" },
+    { "type": "text", "id": "empty_text", "label": "Empty cart text", "default": "Your fragrance ritual is waiting." },
+    { "type": "text", "id": "continue_label", "label": "Continue shopping label", "default": "Discover fragrances" }
+  ]
+}
+{% endschema %}

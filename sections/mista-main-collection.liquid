@@ -1,0 +1,68 @@
+<section>
+  <div class="mista-collection-hero">
+    <div class="mista-collection-hero__media">
+      {% assign hero_image = section.settings.desktop_image | default: collection.featured_image %}
+      {% if hero_image != blank %}<picture>{% if section.settings.mobile_image != blank %}<source media="(max-width: 767px)" srcset="{{ section.settings.mobile_image | image_url: width: 900 }}">{% endif %}{{ hero_image | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '750,1100,1500,2000,2400', sizes: '100vw', alt: section.settings.image_alt | default: collection.title }}</picture>{% else %}<div class="mista-hero__fallback" aria-hidden="true"></div>{% endif %}
+    </div>
+    <div class="mista-collection-hero__overlay" style="opacity:{{ section.settings.overlay | divided_by: 100.0 }}"></div>
+    <div class="mista-collection-hero__content"><div><p class="mista-eyebrow">{{ section.settings.eyebrow }}</p><h1 class="mista-heading">{{ collection.title }}</h1>{% if collection.description != blank %}<div class="mista-copy">{{ collection.description }}</div>{% elsif section.settings.description != blank %}<div class="mista-copy">{{ section.settings.description }}</div>{% endif %}</div></div>
+  </div>
+  <div class="mista-section mista-section--compact">
+    <div class="mista-shell">
+      <form id="MistaCollectionFilters" action="{{ collection.url }}" method="get">
+        <div class="mista-filter-bar">
+          <div class="mista-filter-chips"><a class="mista-chip" href="{{ routes.all_products_collection_url }}" aria-current="{% if collection.handle == 'all' %}true{% else %}false{% endif %}">All</a>{% for block in section.blocks %}<a class="mista-chip" href="{{ block.settings.collection.url | default: routes.all_products_collection_url }}" aria-current="{% if block.settings.collection.handle == collection.handle %}true{% else %}false{% endif %}" {{ block.shopify_attributes }}>{{ block.settings.label | default: block.settings.collection.title }}</a>{% endfor %}</div>
+          <div class="mista-filter-sort"><label for="SortBy">Sort by</label><select id="SortBy" name="sort_by" onchange="this.form.submit()">{% assign sort_by = collection.sort_by | default: collection.default_sort_by %}{% for option in collection.sort_options %}<option value="{{ option.value | escape }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name | escape }}</option>{% endfor %}</select></div>
+        </div>
+        {% if section.settings.enable_filtering and collection.filters.size > 0 %}<div class="mista-facets">{% for filter in collection.filters %}<details><summary>{{ filter.label }}{% if filter.active_values.size > 0 %} ({{ filter.active_values.size }}){% endif %}</summary><div class="mista-facets__panel">{% case filter.type %}{% when 'boolean', 'list' %}{% for value in filter.values %}<label class="mista-chip"><input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %}>{{ value.label }} ({{ value.count }})</label>{% endfor %}{% when 'price_range' %}<label>Min <input type="number" name="{{ filter.min_value.param_name }}" value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}" min="0" max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"></label><label>Max <input type="number" name="{{ filter.max_value.param_name }}" value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}" min="0" max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"></label>{% endcase %}<button class="mista-button mista-button--primary" type="submit">Apply</button></div></details>{% endfor %}</div>{% endif %}
+      </form>
+      {% paginate collection.products by section.settings.products_per_page %}
+        <div class="mista-product-grid" style="--mista-columns:4;--mista-gap:{{ section.settings.gap }}px">
+          {% for product in collection.products %}
+            {% render 'mista-product-card', product: product %}
+            {% if forloop.index == section.settings.promo_position and section.settings.promo_image != blank %}<a class="mista-collection-card" href="{{ section.settings.promo_link }}" style="min-height:0"><span style="position:absolute;inset:0">{{ section.settings.promo_image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '360,540,760,1000', sizes: '(min-width: 990px) 25vw, 50vw', alt: section.settings.promo_heading }}</span><span class="mista-collection-card__overlay"></span><span class="mista-collection-card__content"><h3>{{ section.settings.promo_heading }}</h3><span>{{ section.settings.promo_label }}</span></span></a>{% endif %}
+          {% else %}<p>{{ section.settings.empty_text }}</p>{% endfor %}
+        </div>
+        {% if paginate.pages > 1 %}<nav class="mista-pagination" aria-label="Pagination">{{ paginate | default_pagination }}</nav>{% endif %}
+      {% endpaginate %}
+    </div>
+  </div>
+  {% if section.settings.show_bottom_banner %}<div class="mista-banner" style="--mista-banner-height:{{ section.settings.banner_height }}px;--mista-banner-mobile-height:{{ section.settings.banner_mobile_height }}px"><div class="mista-banner__media">{% if section.settings.banner_desktop_image != blank %}<picture>{% if section.settings.banner_mobile_image != blank %}<source media="(max-width: 767px)" srcset="{{ section.settings.banner_mobile_image | image_url: width: 900 }}">{% endif %}{{ section.settings.banner_desktop_image | image_url: width: 2400 | image_tag: loading: 'lazy', widths: '750,1100,1500,2000,2400', sizes: '100vw', alt: section.settings.banner_heading }}</picture>{% else %}<div class="mista-banner__fallback"></div>{% endif %}</div><div class="mista-banner__overlay"></div><div class="mista-banner__content"><div><p class="mista-eyebrow">{{ section.settings.banner_eyebrow }}</p><h2 class="mista-heading mista-heading--section">{{ section.settings.banner_heading }}</h2>{% if section.settings.banner_label != blank %}<a class="mista-button mista-button--gold" href="{{ section.settings.banner_link }}">{{ section.settings.banner_label }}</a>{% endif %}</div></div></div>{% endif %}
+  <div class="mista-usp"><div class="mista-shell mista-usp__grid"><div class="mista-usp__item">{% render 'mista-icon', name: 'leaf' %}<div><strong>Premium quality</strong><span>Finest ingredients</span></div></div><div class="mista-usp__item">{% render 'mista-icon', name: 'return' %}<div><strong>Long lasting</strong><span>All-day performance</span></div></div><div class="mista-usp__item">{% render 'mista-icon', name: 'shield' %}<div><strong>Secure payment</strong><span>Protected checkout</span></div></div><div class="mista-usp__item">{% render 'mista-icon', name: 'truck' %}<div><strong>Free shipping</strong><span>On qualifying orders</span></div></div></div></div>
+</section>
+{% schema %}
+{
+  "name": "Mista collection",
+  "tag": "section",
+  "class": "mista-main-collection-section",
+  "settings": [
+    { "type": "image_picker", "id": "desktop_image", "label": "Desktop collection hero" },
+    { "type": "image_picker", "id": "mobile_image", "label": "Mobile collection hero" },
+    { "type": "text", "id": "image_alt", "label": "Hero image alt text" },
+    { "type": "text", "id": "eyebrow", "label": "Hero eyebrow", "default": "Our collection" },
+    { "type": "richtext", "id": "description", "label": "Fallback description", "default": "<p>Discover signature fragrances crafted for every mood and every moment.</p>" },
+    { "type": "range", "id": "overlay", "label": "Hero overlay", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 90 },
+    { "type": "checkbox", "id": "enable_filtering", "label": "Enable Shopify filters", "default": true },
+    { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 8, "max": 32, "step": 4, "default": 16 },
+    { "type": "range", "id": "gap", "label": "Product grid gap", "min": 4, "max": 32, "step": 2, "unit": "px", "default": 16 },
+    { "type": "text", "id": "empty_text", "label": "Empty message", "default": "No fragrances match these filters." },
+    { "type": "header", "content": "Promotional card" },
+    { "type": "image_picker", "id": "promo_image", "label": "Promo card image" },
+    { "type": "text", "id": "promo_heading", "label": "Promo card heading", "default": "More than a scent" },
+    { "type": "text", "id": "promo_label", "label": "Promo card label", "default": "Discover the story" },
+    { "type": "url", "id": "promo_link", "label": "Promo card link" },
+    { "type": "range", "id": "promo_position", "label": "Insert after product", "min": 1, "max": 12, "step": 1, "default": 7 },
+    { "type": "header", "content": "Bottom promotional banner" },
+    { "type": "checkbox", "id": "show_bottom_banner", "label": "Show banner", "default": true },
+    { "type": "image_picker", "id": "banner_desktop_image", "label": "Desktop banner image" },
+    { "type": "image_picker", "id": "banner_mobile_image", "label": "Mobile banner image" },
+    { "type": "text", "id": "banner_eyebrow", "label": "Banner eyebrow", "default": "Your next signature" },
+    { "type": "text", "id": "banner_heading", "label": "Banner heading", "default": "Discover the Mista collection" },
+    { "type": "text", "id": "banner_label", "label": "Banner button", "default": "Shop all" },
+    { "type": "url", "id": "banner_link", "label": "Banner link" },
+    { "type": "range", "id": "banner_height", "label": "Desktop banner height", "min": 260, "max": 600, "step": 10, "unit": "px", "default": 380 },
+    { "type": "range", "id": "banner_mobile_height", "label": "Mobile banner height", "min": 320, "max": 680, "step": 10, "unit": "px", "default": 460 }
+  ],
+  "blocks": [{ "type": "filter_chip", "name": "Collection chip", "limit": 8, "settings": [{ "type": "collection", "id": "collection", "label": "Collection" }, { "type": "text", "id": "label", "label": "Label" }] }]
+}
+{% endschema %}

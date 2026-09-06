@@ -1,0 +1,73 @@
+{% liquid
+  assign selected_variant = product.selected_or_first_available_variant
+  assign featured_media = selected_variant.featured_media | default: product.featured_media
+  assign top_notes = product.metafields.custom.top_notes.value | default: section.settings.top_notes_fallback
+  assign heart_notes = product.metafields.custom.heart_notes.value | default: section.settings.heart_notes_fallback
+  assign base_notes = product.metafields.custom.base_notes.value | default: section.settings.base_notes_fallback
+%}
+<section class="mista-product" data-mista-product data-money-format="{{ shop.money_format | escape }}">
+  <div class="mista-shell">
+    <nav class="mista-breadcrumb" aria-label="Breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span>{% if product.collections.first %}<a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a><span>/</span>{% endif %}<span aria-current="page">{{ product.title }}</span></nav>
+    <div class="mista-product__grid">
+      <div class="mista-gallery" data-mista-gallery>
+        <div class="mista-gallery__thumbs" role="list" aria-label="Product images">
+          {% for media in product.media %}{% if media.media_type == 'image' %}<button type="button" class="mista-gallery__thumb" data-mista-gallery-thumb data-src="{{ media | image_url: width: 1400 }}" data-srcset="{{ media | image_url: width: 700 }} 700w, {{ media | image_url: width: 1000 }} 1000w, {{ media | image_url: width: 1400 }} 1400w" data-alt="{{ media.alt | default: product.title | escape }}" aria-label="View image {{ forloop.index }}" aria-current="{% if media.id == featured_media.id %}true{% else %}false{% endif %}">{{ media | image_url: width: 180 | image_tag: loading: 'lazy', widths: '90,140,180', alt: media.alt | default: product.title }}</button>{% endif %}{% endfor %}
+        </div>
+        <div class="mista-gallery__main">{% if featured_media %}<img src="{{ featured_media | image_url: width: 1200 }}" srcset="{{ featured_media | image_url: width: 600 }} 600w, {{ featured_media | image_url: width: 900 }} 900w, {{ featured_media | image_url: width: 1200 }} 1200w, {{ featured_media | image_url: width: 1800 }} 1800w" sizes="(min-width: 768px) 55vw, 100vw" width="{{ featured_media.preview_image.width }}" height="{{ featured_media.preview_image.height }}" alt="{{ featured_media.alt | default: product.title | escape }}" loading="eager" fetchpriority="high" data-mista-gallery-main>{% else %}<div class="mista-product-card__placeholder"><span>M</span></div>{% endif %}</div>
+      </div>
+      <div class="mista-product__info">
+        <div class="mista-product__title-row"><div><p class="mista-eyebrow">{{ product.vendor | default: 'Mista Perfume' }}</p><h1 class="mista-product__title">{{ product.title }}</h1></div>{% if product.tags contains 'Best Seller' %}<span class="mista-badge">Best Seller</span>{% elsif product.tags contains 'New' %}<span class="mista-badge">New</span>{% endif %}</div>
+        <div class="mista-stars"><span aria-hidden="true">★★★★★</span>{% if product.metafields.reviews.rating_count.value %}<small>({{ product.metafields.reviews.rating_count.value }} reviews)</small>{% endif %}</div>
+        <div class="mista-product__prices"><strong data-mista-price>{{ selected_variant.price | money }}</strong><s data-mista-compare-price {% unless selected_variant.compare_at_price > selected_variant.price %}hidden{% endunless %}>{% if selected_variant.compare_at_price > selected_variant.price %}{{ selected_variant.compare_at_price | money }}{% endif %}</s></div>
+        {% if product.description != blank %}<div class="mista-product__description">{{ product.description | strip_html | truncatewords: 45 }}</div>{% endif %}
+        {% form 'product', product, class: 'mista-product-form', data-mista-ajax-cart: '' %}
+          <input type="hidden" name="id" value="{{ selected_variant.id }}">
+          <script type="application/json" data-mista-variants>{{ product.variants | json }}</script>
+          {% unless product.has_only_default_variant %}<div class="mista-options">{% for option in product.options_with_values %}<fieldset><legend>{{ option.name }}</legend><div class="mista-options__list">{% for value in option.values %}<label class="mista-pill" for="MistaOption-{{ section.id }}-{{ option.position }}-{{ forloop.index }}"><input id="MistaOption-{{ section.id }}-{{ option.position }}-{{ forloop.index }}" type="radio" name="options[{{ option.name | escape }}]" value="{{ value | escape }}" data-mista-option {% if value.selected %}checked{% endif %}>{{ value }}</label>{% endfor %}</div></fieldset>{% endfor %}</div>{% endunless %}
+          <label class="mista-eyebrow" for="MistaQuantity-{{ section.id }}">Quantity</label>
+          <div class="mista-quantity-row">
+            <div class="mista-quantity"><button type="button" data-mista-quantity="-1" aria-controls="MistaQuantity-{{ section.id }}" aria-label="Decrease quantity">{% render 'mista-icon', name: 'minus' %}</button><input id="MistaQuantity-{{ section.id }}" name="quantity" type="number" min="1" value="1" inputmode="numeric" aria-label="Quantity"><button type="button" data-mista-quantity="1" aria-controls="MistaQuantity-{{ section.id }}" aria-label="Increase quantity">{% render 'mista-icon', name: 'plus' %}</button></div>
+            <button class="mista-button mista-button--gold" type="submit" data-mista-add data-available-label="{{ section.settings.add_label }}" data-sold-label="{{ section.settings.sold_label }}" data-loading-label="Adding…" data-added-label="Added" {% unless selected_variant.available %}disabled{% endunless %}>{% if selected_variant.available %}{{ section.settings.add_label }}{% else %}{{ section.settings.sold_label }}{% endif %}</button>
+          </div>
+          <button class="mista-button mista-button--primary mista-buy-now" type="submit" name="checkout" {% unless selected_variant.available %}disabled{% endunless %}>{{ section.settings.buy_label }}</button>
+          <p class="mista-form-status" data-mista-form-status role="status"></p>
+        {% endform %}
+        <div class="mista-trust-row">
+          <div class="mista-trust-item">{% render 'mista-icon', name: 'truck' %}<span>{{ section.settings.shipping_text }}</span></div>
+          <div class="mista-trust-item">{% render 'mista-icon', name: 'shield' %}<span>{{ section.settings.payment_text }}</span></div>
+          <div class="mista-trust-item">{% render 'mista-icon', name: 'return' %}<span>{{ section.settings.returns_text }}</span></div>
+        </div>
+        <div class="mista-accordions">
+          {% assign accordion_titles = 'Product details|How to use|Shipping & returns|Reviews' | split: '|' %}
+          {% for title in accordion_titles %}<div class="mista-accordion"><button class="mista-accordion__button" type="button" data-mista-accordion-button aria-expanded="false" aria-controls="MistaAccordion-{{ section.id }}-{{ forloop.index }}"><span>{{ title }}{% if title == 'Reviews' and product.metafields.reviews.rating_count.value %} ({{ product.metafields.reviews.rating_count.value }}){% endif %}</span>{% render 'mista-icon', name: 'chevron' %}</button><div id="MistaAccordion-{{ section.id }}-{{ forloop.index }}" class="mista-accordion__panel" hidden>{% case forloop.index %}{% when 1 %}{{ product.description }}{% when 2 %}{{ section.settings.how_to_use }}{% when 3 %}{{ section.settings.shipping_returns }}{% when 4 %}<p>{{ section.settings.reviews_text }}</p>{% endcase %}</div></div>{% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="mista-notes" aria-label="Fragrance notes">
+      <div class="mista-note-card">{% render 'mista-icon', name: 'leaf' %}<strong>Top notes</strong><span>{{ top_notes }}</span></div>
+      <div class="mista-note-card">{% render 'mista-icon', name: 'heart' %}<strong>Heart notes</strong><span>{{ heart_notes }}</span></div>
+      <div class="mista-note-card">{% render 'mista-icon', name: 'sparkle' %}<strong>Base notes</strong><span>{{ base_notes }}</span></div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Mista product information",
+  "tag": "section",
+  "class": "mista-main-product-section",
+  "settings": [
+    { "type": "text", "id": "add_label", "label": "Add to cart label", "default": "Add to cart" },
+    { "type": "text", "id": "sold_label", "label": "Sold out label", "default": "Sold out" },
+    { "type": "text", "id": "buy_label", "label": "Buy now label", "default": "Buy it now" },
+    { "type": "text", "id": "shipping_text", "label": "Shipping trust text", "default": "Free shipping on orders over $75" },
+    { "type": "text", "id": "payment_text", "label": "Payment trust text", "default": "Secure payment" },
+    { "type": "text", "id": "returns_text", "label": "Returns trust text", "default": "Easy returns" },
+    { "type": "richtext", "id": "how_to_use", "label": "How to use", "default": "<p>Apply to pulse points. Avoid rubbing the fragrance into the skin and allow it to develop naturally.</p>" },
+    { "type": "richtext", "id": "shipping_returns", "label": "Shipping and returns", "default": "<p>Orders are prepared with care. Delivery times and return eligibility are shown in your store policies.</p>" },
+    { "type": "textarea", "id": "reviews_text", "label": "Reviews fallback", "default": "Verified customer reviews appear here when a reviews app is connected." },
+    { "type": "text", "id": "top_notes_fallback", "label": "Top notes fallback", "default": "Bergamot, lychee, pear" },
+    { "type": "text", "id": "heart_notes_fallback", "label": "Heart notes fallback", "default": "Rose, peony, jasmine" },
+    { "type": "text", "id": "base_notes_fallback", "label": "Base notes fallback", "default": "Sandalwood, musk, amber" }
+  ]
+}
+{% endschema %}

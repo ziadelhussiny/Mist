@@ -23,6 +23,8 @@
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
     {%- render 'color-palette' -%}
+    {{ 'mista-theme.css' | asset_url | stylesheet_tag: preload: true }}
+    <script type="module" src="{{ 'mista-theme.js' | asset_url }}" fetchpriority="low"></script>
 
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}
@@ -32,6 +34,37 @@
   </head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
+    <style>
+      :root {
+        --mista-color-cream: {{ settings.mista_cream | default: '#F7F1E8' }};
+        --mista-color-beige: {{ settings.mista_beige | default: '#E8D8C3' }};
+        --mista-color-navy: {{ settings.mista_navy | default: '#0D1B2A' }};
+        --mista-color-gold: {{ settings.mista_gold | default: '#C99A57' }};
+        --mista-color-soft-gold: {{ settings.mista_soft_gold | default: '#DDBE8A' }};
+        --mista-color-charcoal: {{ settings.mista_charcoal | default: '#242424' }};
+        --mista-color-muted: {{ settings.mista_muted | default: '#77736D' }};
+        --mista-color-white: {{ settings.mista_white | default: '#FFFFFF' }};
+        --mista-page-width: {{ settings.mista_page_width | default: 1440 }}px;
+        --mista-section-spacing: {{ settings.mista_section_spacing | default: 72 }}px;
+        --mista-card-radius: {{ settings.mista_card_radius | default: 3 }}px;
+        --mista-button-radius: {{ settings.mista_button_radius | default: 3 }}px;
+        --mista-product-ratio: {{ settings.mista_product_ratio | default: '4 / 5' }};
+        --mista-badge-bg: {{ settings.mista_badge_bg | default: '#F7F1E8' }};
+        --mista-badge-text: {{ settings.mista_badge_text | default: '#242424' }};
+        --mista-badge-border: {{ settings.mista_badge_border | default: '#C99A57' }};
+        --mista-badge-radius: {{ settings.mista_badge_radius | default: 16 }}px;
+        --mista-badge-font-size: {{ settings.mista_badge_font_size | default: 11 }}px;
+        --mista-badge-padding-x: {{ settings.mista_badge_padding_x | default: 12 }}px;
+        --mista-badge-padding-y: {{ settings.mista_badge_padding_y | default: 6 }}px;
+        --mista-selected-bg: {{ settings.mista_selected_bg | default: '#0D1B2A' }};
+        --mista-selected-text: {{ settings.mista_selected_text | default: '#FFFFFF' }};
+        --mista-selected-border: {{ settings.mista_selected_border | default: '#0D1B2A' }};
+        --mista-sale-bg: {{ settings.mista_sale_bg | default: '#A44331' }};
+        --mista-sale-text: {{ settings.mista_sale_text | default: '#FFFFFF' }};
+        --mista-sold-bg: {{ settings.mista_sold_bg | default: '#77736D' }};
+        --mista-sold-text: {{ settings.mista_sold_text | default: '#FFFFFF' }};
+      }
+    </style>
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
 
     {% render 'chat-drawer' %}
