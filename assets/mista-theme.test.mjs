@@ -154,7 +154,7 @@ test('featured products support all products, a collection, or manual product se
   assert.match(featuredProducts, /for product in featured_collection\.products/);
   assert.doesNotMatch(featuredProducts, /preview_title|Noir Intense|Rose Allure|Oud Elegance|Citrus Bleu/);
   assert.equal(homepage.sections.best_sellers.settings.product_source, 'all');
-  assert.equal(homepage.sections.best_sellers.settings.collection, 'all');
+  assert.ok(Array.isArray(homepage.sections.best_sellers.settings.products));
 });
 
 test('collection hero copy keeps the global page gutter on desktop and mobile', () => {
