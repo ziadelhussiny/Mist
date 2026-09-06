@@ -120,7 +120,8 @@
       "settings": {
         "eyebrow": "Most loved",
         "heading": "Best sellers",
-        "collection": "frontpage",
+        "products": [],
+        "collection": "men",
         "button_label": "Shop all",
         "products_to_show": 8,
         "columns": 4,
