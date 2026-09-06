@@ -61,7 +61,8 @@ body {
 .mista-announcement { min-height: 29px; display: grid; place-items: center; padding: 5px 16px; background: var(--mista-navy); color: var(--mista-white); font-size: .68rem; letter-spacing: .08em; text-align: center; text-transform: uppercase; }
 .mista-announcement p { margin: 0; }
 
-.mista-header-wrap { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--mista-cream) 96%, transparent); border-bottom: 1px solid var(--mista-border); backdrop-filter: blur(14px); }
+.mista-header-section { position: relative; z-index: 40; }
+.mista-header-wrap { position: relative; z-index: 1; background: color-mix(in srgb, var(--mista-cream) 96%, transparent); border-bottom: 1px solid var(--mista-border); backdrop-filter: blur(14px); }
 .mista-header { min-height: 72px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; }
 .mista-header__brand { color: var(--mista-navy); text-decoration: none; display: inline-flex; align-items: center; gap: 10px; justify-self: start; }
 .mista-header__logo { width: auto; max-width: 150px; height: var(--mista-logo-height, 42px); object-fit: contain; }
@@ -76,7 +77,7 @@ body {
 .mista-icon-button:hover { color: var(--mista-gold); }
 .mista-cart-count { position: absolute; top: 4px; right: 2px; min-width: 17px; height: 17px; display: grid; place-items: center; padding: 0 4px; border-radius: 9px; background: var(--mista-gold); color: var(--mista-navy); font-size: .6rem; font-weight: 800; }
 .mista-menu-toggle { display: none; }
-.mista-mobile-menu { position: fixed; inset: 101px 0 auto; z-index: 39; max-height: calc(100svh - 101px); overflow: auto; padding: 22px; background: var(--mista-cream); border-bottom: 1px solid var(--mista-border); box-shadow: var(--mista-shadow); }
+.mista-mobile-menu { position: absolute; inset-block-start: 100%; inset-inline: 0; z-index: 2; max-height: calc(100svh - 93px); overflow: auto; padding: 22px; background: var(--mista-cream); border-bottom: 1px solid var(--mista-border); box-shadow: var(--mista-shadow); }
 .mista-mobile-menu nav { display: grid; }
 .mista-mobile-menu a { padding: 16px 0; border-bottom: 1px solid var(--mista-border); color: var(--mista-navy); font-family: Georgia, serif; font-size: 1.35rem; text-decoration: none; }
 
@@ -305,7 +306,7 @@ body {
   .mista-header__brand { justify-self: center; }
   .mista-header__brand .mista-wordmark { display: none; }
   .mista-nav, .mista-header__actions > .mista-search-action, .mista-header__actions > .mista-wishlist-action { display: none; }
-  .mista-mobile-menu { inset-block-start: 93px; max-height: calc(100svh - 93px); }
+  .mista-mobile-menu { max-height: calc(100svh - 93px); }
   .mista-collection-grid { --mista-columns: 3 !important; }
   .mista-product-grid { --mista-columns: 3 !important; }
   .mista-product__grid { grid-template-columns: 1fr 1fr; gap: 30px; }

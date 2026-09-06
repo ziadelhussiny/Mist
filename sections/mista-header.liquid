@@ -1,5 +1,18 @@
 {% liquid
   assign nav_menu = section.settings.menu
+  assign about_page = pages['about-us']
+  assign about_url = '/pages/about-us'
+  if about_page != blank
+    assign about_url = about_page.url
+  endif
+
+  assign menu_has_about = false
+  for link in nav_menu.links
+    assign normalized_title = link.title | downcase
+    if link.url contains '/pages/about' or normalized_title contains 'about'
+      assign menu_has_about = true
+    endif
+  endfor
 %}
 <div class="mista-header-wrap" style="--mista-logo-height:{{ section.settings.logo_height }}px">
   <header class="mista-header mista-shell" role="banner">
@@ -12,11 +25,12 @@
       {% endif %}
     </a>
     <nav class="mista-nav" aria-label="Primary navigation">
-      {% for link in nav_menu.links %}
-        <a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a>
+      {% if nav_menu.links.size > 0 %}
+        {% for link in nav_menu.links %}<a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a>{% endfor %}
       {% else %}
-        <a href="{{ routes.root_url }}">Home</a><a href="{{ routes.all_products_collection_url }}">Shop</a><a href="{{ routes.collections_url }}">Collections</a><a href="/pages/about-us">About us</a><a href="/pages/contact">Contact</a>
-      {% endfor %}
+        <a href="{{ routes.root_url }}">Home</a><a href="{{ routes.all_products_collection_url }}">Shop</a><a href="{{ routes.collections_url }}">Collections</a><a href="/pages/contact">Contact</a>
+      {% endif %}
+      {% unless menu_has_about %}<a href="{{ about_url }}" data-mista-about-link {% if request.path == about_url %}aria-current="page"{% endif %}>About us</a>{% endunless %}
     </nav>
     <div class="mista-header__actions">
       {% if section.settings.show_search %}<a class="mista-icon-button mista-search-action" href="{{ routes.search_url }}" aria-label="Search">{% render 'mista-icon', name: 'search' %}</a>{% endif %}
@@ -33,7 +47,12 @@
 </div>
 <div id="MistaMobileMenu" class="mista-mobile-menu" data-mista-menu hidden>
   <nav aria-label="Mobile navigation">
-    {% for link in nav_menu.links %}<a href="{{ link.url }}">{{ link.title }}</a>{% else %}<a href="{{ routes.root_url }}">Home</a><a href="{{ routes.all_products_collection_url }}">Shop</a><a href="{{ routes.collections_url }}">Collections</a><a href="/pages/about-us">About us</a><a href="/pages/contact">Contact</a>{% endfor %}
+    {% if nav_menu.links.size > 0 %}
+      {% for link in nav_menu.links %}<a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a>{% endfor %}
+    {% else %}
+      <a href="{{ routes.root_url }}">Home</a><a href="{{ routes.all_products_collection_url }}">Shop</a><a href="{{ routes.collections_url }}">Collections</a><a href="/pages/contact">Contact</a>
+    {% endif %}
+    {% unless menu_has_about %}<a href="{{ about_url }}" data-mista-about-link {% if request.path == about_url %}aria-current="page"{% endif %}>About us</a>{% endunless %}
     <a href="{{ routes.search_url }}">Search</a>
   </nav>
 </div>
