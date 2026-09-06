@@ -120,7 +120,7 @@
       "settings": {
         "eyebrow": "Most loved",
         "heading": "Best sellers",
-        "collection": "all",
+        "collection": "frontpage",
         "button_label": "Shop all",
         "products_to_show": 8,
         "columns": 4,
