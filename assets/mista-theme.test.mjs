@@ -137,9 +137,14 @@ test('storefront loads production-minified stylesheets', () => {
 test('featured products automatically use the store catalog when no collection is selected', () => {
   const featuredProducts = readFileSync(new URL('../sections/mista-featured-products.liquid', import.meta.url), 'utf8');
 
+  assert.match(featuredProducts, /"type":\s*"product_list"/);
+  assert.match(featuredProducts, /"id":\s*"products"/);
+  assert.match(featuredProducts, /assign manually_selected_products = section\.settings\.products/);
   assert.match(featuredProducts, /if featured_collection == blank or featured_collection\.products_count == 0/);
   assert.match(featuredProducts, /assign featured_collection = collections\.all/);
+  assert.match(featuredProducts, /for product in manually_selected_products/);
   assert.match(featuredProducts, /for product in featured_collection\.products/);
+  assert.doesNotMatch(featuredProducts, /preview_title|Noir Intense|Rose Allure|Oud Elegance|Citrus Bleu/);
 });
 
 test('collection hero copy keeps the global page gutter on desktop and mobile', () => {
