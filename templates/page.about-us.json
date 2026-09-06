@@ -1,18 +1,100 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "hero": { "type": "mista-about-hero", "settings": {} },
-    "story": { "type": "mista-about-story", "settings": {} },
+    "hero": {
+      "type": "mista-about-hero",
+      "settings": {
+        "image_alt": "Mista perfume craftsmanship and marble cap",
+        "eyebrow": "Our story",
+        "heading": "The art of perfumery",
+        "text": "<p>A modern online perfume house creating fragrances that feel personal, expressive, and beautifully made.</p>",
+        "height": 520,
+        "overlay": 85,
+        "alignment": "left"
+      }
+    },
+    "story": {
+      "type": "mista-about-story",
+      "settings": {
+        "image_alt": "Black Mista perfume bottle with gold monogram",
+        "eyebrow": "Crafted with purpose",
+        "heading": "Made to become part of you",
+        "text": "<p>We balance expressive notes, considered ingredients, and precise craftsmanship to create lasting fragrances with presence and character. As an online-only house, every touchpoint is designed around a thoughtful, direct relationship with our customers.</p>",
+        "button_label": "",
+        "button_link": "",
+        "alignment": "left",
+        "background": "#ffffff"
+      }
+    },
     "values": {
       "type": "mista-about-values",
       "blocks": {
-        "mission": { "type": "value", "settings": { "icon": "sparkle", "heading": "Our mission", "text": "To make beautifully composed fragrance an expressive part of everyday life." } },
-        "vision": { "type": "value", "settings": { "icon": "heart", "heading": "Our vision", "text": "A world where scent is personal, confident, and memorable." } },
-        "values": { "type": "value", "settings": { "icon": "shield", "heading": "Our values", "text": "Quality, authenticity, curiosity, and care in every detail." } }
+        "mission": {
+          "type": "value",
+          "settings": {
+            "icon": "sparkle",
+            "heading": "Our mission",
+            "text": "To make beautifully composed fragrance an expressive part of everyday life."
+          }
+        },
+        "vision": {
+          "type": "value",
+          "settings": {
+            "icon": "heart",
+            "heading": "Our vision",
+            "text": "A world where scent is personal, confident, and memorable."
+          }
+        },
+        "values": {
+          "type": "value",
+          "settings": {
+            "icon": "shield",
+            "heading": "Our values",
+            "text": "Quality, authenticity, curiosity, and care in every detail."
+          }
+        }
       },
-      "block_order": ["mission", "vision", "values"],
-      "settings": {}
+      "block_order": [
+        "mission",
+        "vision",
+        "values"
+      ],
+      "settings": {
+        "eyebrow": "What guides us",
+        "heading": "Mission, vision, values",
+        "text": "",
+        "columns": 3,
+        "gap": 18,
+        "background": "#f7f1e8"
+      }
     },
-    "banner": { "type": "mista-about-banner", "settings": { "button_link": "shopify://collections/all" } }
+    "banner": {
+      "type": "mista-about-banner",
+      "settings": {
+        "image_alt": "Mista black perfume bottle with gold monogram",
+        "eyebrow": "More than a scent",
+        "heading": "A story you can wear",
+        "text": "<p>Discover a fragrance that feels unmistakably yours.</p>",
+        "button_label": "Discover our collections",
+        "button_link": "shopify://collections/all",
+        "height": 420,
+        "mobile_height": 480,
+        "overlay": 75
+      }
+    }
   },
-  "order": ["hero", "story", "values", "banner"]
+  "order": [
+    "hero",
+    "story",
+    "values",
+    "banner"
+  ]
 }
