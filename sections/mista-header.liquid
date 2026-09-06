@@ -15,7 +15,7 @@
       {% for link in nav_menu.links %}
         <a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a>
       {% else %}
-        <a href="{{ routes.root_url }}">Home</a><a href="{{ routes.all_products_collection_url }}">Shop</a><a href="/collections">Collections</a><a href="/pages/about">About us</a><a href="/pages/contact">Contact</a>
+        <a href="{{ routes.root_url }}">Home</a><a href="{{ routes.all_products_collection_url }}">Shop</a><a href="{{ routes.collections_url }}">Collections</a><a href="/pages/about">About us</a><a href="/pages/contact">Contact</a>
       {% endfor %}
     </nav>
     <div class="mista-header__actions">
@@ -33,7 +33,7 @@
 </div>
 <div id="MistaMobileMenu" class="mista-mobile-menu" data-mista-menu hidden>
   <nav aria-label="Mobile navigation">
-    {% for link in nav_menu.links %}<a href="{{ link.url }}">{{ link.title }}</a>{% else %}<a href="{{ routes.root_url }}">Home</a><a href="{{ routes.all_products_collection_url }}">Shop</a><a href="/collections">Collections</a><a href="/pages/about">About us</a><a href="/pages/contact">Contact</a>{% endfor %}
+    {% for link in nav_menu.links %}<a href="{{ link.url }}">{{ link.title }}</a>{% else %}<a href="{{ routes.root_url }}">Home</a><a href="{{ routes.all_products_collection_url }}">Shop</a><a href="{{ routes.collections_url }}">Collections</a><a href="/pages/about">About us</a><a href="/pages/contact">Contact</a>{% endfor %}
     <a href="{{ routes.search_url }}">Search</a>
   </nav>
 </div>
