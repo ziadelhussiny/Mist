@@ -21,7 +21,7 @@
           {{ card_product.media[1] | image_url: width: 900 | image_tag: loading: 'lazy', widths: '240,360,480,640,900', sizes: '(min-width: 990px) 25vw, 50vw', class: 'mista-product-card__image mista-product-card__image--secondary', alt: card_product.media[1].alt | default: card_product.title }}
         {% endif %}
       {% else %}
-        <div class="mista-product-card__placeholder" aria-hidden="true"><span>M</span></div>
+        <img class="mista-product-card__image" src="{{ 'mista-product-black.png' | asset_url }}" width="1120" height="1400" loading="lazy" alt="Mista black perfume bottle with gold monogram">
       {% endif %}
     </a>
     {% if badge != blank %}<span class="mista-badge mista-badge--{% if badge == 'Sale' %}sale{% elsif badge == 'Sold out' %}sold{% else %}light{% endif %}">{{ badge }}</span>{% endif %}

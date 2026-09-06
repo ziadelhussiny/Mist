@@ -1,7 +1,8 @@
 {
   "sections": {
-    "main": {
-      "type": "mista-main-collection",
+    "hero": { "type": "mista-collection-hero", "settings": {} },
+    "products": {
+      "type": "mista-collection-products",
       "blocks": {
         "men": { "type": "filter_chip", "settings": { "label": "Men" } },
         "women": { "type": "filter_chip", "settings": { "label": "Women" } },
@@ -9,8 +10,20 @@
         "sets": { "type": "filter_chip", "settings": { "label": "Discovery sets" } }
       },
       "block_order": ["men", "women", "unisex", "sets"],
-      "settings": { "banner_link": "shopify://collections/all" }
+      "settings": { "promo_link": "shopify://pages/about-us" }
+    },
+    "promo": { "type": "mista-promo-banner", "settings": { "eyebrow": "Your next signature", "heading": "Discover the Mista collection", "button_label": "Shop all", "button_link": "shopify://collections/all" } },
+    "usp": {
+      "type": "mista-usp",
+      "blocks": {
+        "quality": { "type": "feature", "settings": { "icon": "leaf", "heading": "Premium quality", "text": "Finest ingredients" } },
+        "lasting": { "type": "feature", "settings": { "icon": "return", "heading": "Long lasting", "text": "All-day performance" } },
+        "secure": { "type": "feature", "settings": { "icon": "shield", "heading": "Secure payment", "text": "Protected checkout" } },
+        "shipping": { "type": "feature", "settings": { "icon": "truck", "heading": "Free shipping", "text": "On qualifying orders" } }
+      },
+      "block_order": ["quality", "lasting", "secure", "shipping"],
+      "settings": {}
     }
   },
-  "order": ["main"]
+  "order": ["hero", "products", "promo", "usp"]
 }

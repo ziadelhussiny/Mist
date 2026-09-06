@@ -1,7 +1,9 @@
 {
   "sections": {
-    "main": {
-      "type": "mista-contact",
+    "hero": { "type": "mista-contact-hero", "settings": {} },
+    "support": { "type": "mista-contact-support", "settings": {} },
+    "faq": {
+      "type": "mista-contact-faq",
       "blocks": {
         "tracking": { "type": "faq", "settings": { "question": "Where is my order?", "answer": "<p>Use the tracking link in your shipping confirmation. If you need help, send us your order number.</p>" } },
         "shipping": { "type": "faq", "settings": { "question": "What are your shipping times?", "answer": "<p>Delivery estimates appear at checkout and in your shipping confirmation.</p>" } },
@@ -13,5 +15,5 @@
       "settings": {}
     }
   },
-  "order": ["main"]
+  "order": ["hero", "support", "faq"]
 }

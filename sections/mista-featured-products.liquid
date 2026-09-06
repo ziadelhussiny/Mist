@@ -2,7 +2,22 @@
   <div class="mista-shell">
     <header class="mista-section-head"><div><p class="mista-eyebrow">{{ section.settings.eyebrow }}</p><h2 class="mista-heading mista-heading--section">{{ section.settings.heading }}</h2></div>{% if section.settings.collection != blank %}<a class="mista-button mista-button--outline" href="{{ section.settings.collection.url }}">{{ section.settings.button_label }}</a>{% endif %}</header>
     <div class="mista-product-grid" style="--mista-columns:{{ section.settings.columns }}">
-      {% for product in section.settings.collection.products limit: section.settings.products_to_show %}{% render 'mista-product-card', product: product %}{% else %}{% for i in (1..4) %}<article class="mista-product-card"><div class="mista-product-card__media"><div class="mista-product-card__placeholder"><span>M</span></div></div><div class="mista-product-card__body"><span class="mista-product-card__title">Mista Signature {{ i }}</span><div class="mista-stars">★★★★★</div><div class="mista-price"><strong>{{ 5500 | money }}</strong></div><span class="mista-button mista-button--primary mista-button--compact">Add to cart</span></div></article>{% endfor %}{% endfor %}
+      {% for product in section.settings.collection.products limit: section.settings.products_to_show %}{% render 'mista-product-card', product: product %}{% else %}{% for i in (1..4) %}{% liquid
+        case i
+          when 1
+            assign preview_image = 'mista-product-black.png'
+            assign preview_title = 'Noir Intense'
+          when 2
+            assign preview_image = 'mista-product-pink.png'
+            assign preview_title = 'Rose Allure'
+          when 3
+            assign preview_image = 'mista-product-orange.png'
+            assign preview_title = 'Oud Elegance'
+          else
+            assign preview_image = 'mista-product-turquoise.png'
+            assign preview_title = 'Citrus Bleu'
+        endcase
+      %}<article class="mista-product-card"><div class="mista-product-card__media"><img class="mista-product-card__image" src="{{ preview_image | asset_url }}" width="1120" height="1400" loading="lazy" alt="{{ preview_title }} Mista perfume bottle with gold monogram"></div><div class="mista-product-card__body"><span class="mista-product-card__title">{{ preview_title }}</span><div class="mista-stars">★★★★★</div><div class="mista-price"><strong>{{ 5500 | money }}</strong></div><span class="mista-button mista-button--primary mista-button--compact">Add to cart</span></div></article>{% endfor %}{% endfor %}
     </div>
   </div>
 </section>

@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "hero": { "type": "mista-about-hero", "settings": {} },
+    "story": { "type": "mista-about-story", "settings": {} },
+    "values": {
+      "type": "mista-about-values",
+      "blocks": {
+        "mission": { "type": "value", "settings": { "icon": "sparkle", "heading": "Our mission", "text": "To make beautifully composed fragrance an expressive part of everyday life." } },
+        "vision": { "type": "value", "settings": { "icon": "heart", "heading": "Our vision", "text": "A world where scent is personal, confident, and memorable." } },
+        "values": { "type": "value", "settings": { "icon": "shield", "heading": "Our values", "text": "Quality, authenticity, curiosity, and care in every detail." } }
+      },
+      "block_order": ["mission", "vision", "values"],
+      "settings": {}
+    },
+    "banner": { "type": "mista-about-banner", "settings": { "button_link": "shopify://collections/all" } }
+  },
+  "order": ["hero", "story", "values", "banner"]
+}

@@ -1,5 +1,5 @@
 <section class="mista-story" style="background:{{ section.settings.background }}">
-  <div class="mista-story__media">{% if section.settings.image != blank %}{{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width: 768px) 55vw, 100vw', alt: section.settings.image_alt }}{% else %}<div class="mista-story__placeholder" aria-hidden="true"></div>{% endif %}</div>
+  <div class="mista-story__media">{% if section.settings.image != blank %}{{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width: 768px) 55vw, 100vw', alt: section.settings.image_alt }}{% else %}<img src="{{ 'mista-about-desktop.png' | asset_url }}" width="1672" height="940" loading="lazy" alt="{{ section.settings.image_alt | escape }}">{% endif %}</div>
   <div class="mista-story__content"><p class="mista-eyebrow">{{ section.settings.eyebrow }}</p><h2 class="mista-heading mista-heading--section">{{ section.settings.heading }}</h2><div class="mista-copy">{{ section.settings.text }}</div>{% if section.settings.button_label != blank %}<a class="mista-button mista-button--outline" href="{{ section.settings.button_link }}">{{ section.settings.button_label }}</a>{% endif %}</div>
 </section>
 {% schema %}

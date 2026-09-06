@@ -1,0 +1,32 @@
+<section class="mista-section" style="--mista-section-bg:{{ section.settings.background }}">
+  <div class="mista-shell mista-contact-grid"><div class="mista-contact-methods">
+    {% if settings.mista_support_email != blank %}<div class="mista-contact-method">{% render 'mista-icon', name: 'sparkle' %}<div><strong>{{ section.settings.email_heading }}</strong><a href="mailto:{{ settings.mista_support_email }}">{{ settings.mista_support_email }}</a></div></div>{% endif %}
+    {% if settings.mista_support_whatsapp != blank %}<div class="mista-contact-method">{% render 'mista-icon', name: 'heart' %}<div><strong>{{ section.settings.whatsapp_heading }}</strong><a href="https://wa.me/{{ settings.mista_support_whatsapp | remove: ' ' | remove: '+' }}">{{ settings.mista_support_whatsapp }}</a></div></div>{% endif %}
+    {% if settings.mista_support_phone != blank %}<div class="mista-contact-method">{% render 'mista-icon', name: 'return' %}<div><strong>{{ section.settings.phone_heading }}</strong><a href="tel:{{ settings.mista_support_phone }}">{{ settings.mista_support_phone }}</a></div></div>{% endif %}
+    <div class="mista-contact-method">{% render 'mista-icon', name: 'return' %}<div><strong>{{ section.settings.hours_heading }}</strong><span>{{ settings.mista_support_hours }}</span></div></div>
+  </div><div><p class="mista-eyebrow">{{ section.settings.eyebrow }}</p><h2 class="mista-heading mista-heading--section">{{ section.settings.heading }}</h2>{% if section.settings.text != blank %}<div class="mista-copy">{{ section.settings.text }}</div>{% endif %}{% form 'contact', class: 'mista-form' %}{% if form.posted_successfully? %}<p class="mista-field--full" role="status">{{ section.settings.success_message }}</p>{% endif %}{% if form.errors %}<div class="mista-field--full" role="alert">{{ form.errors | default_errors }}</div>{% endif %}<div class="mista-field"><label for="ContactName-{{ section.id }}">{{ section.settings.name_label }}</label><input id="ContactName-{{ section.id }}" type="text" name="contact[name]" value="{{ form.name }}" autocomplete="name" required></div><div class="mista-field"><label for="ContactEmail-{{ section.id }}">{{ section.settings.email_label }}</label><input id="ContactEmail-{{ section.id }}" type="email" name="contact[email]" value="{{ form.email }}" autocomplete="email" required></div><div class="mista-field mista-field--full"><label for="ContactSubject-{{ section.id }}">{{ section.settings.subject_label }}</label><select id="ContactSubject-{{ section.id }}" name="contact[subject]"><option>Order support</option><option>Shipping question</option><option>Returns question</option><option>Product advice</option><option>Other</option></select></div><div class="mista-field mista-field--full"><label for="ContactMessage-{{ section.id }}">{{ section.settings.message_label }}</label><textarea id="ContactMessage-{{ section.id }}" name="contact[body]" required>{{ form.body }}</textarea></div><button class="mista-button mista-button--primary mista-field--full" type="submit">{{ section.settings.submit_label }}</button>{% endform %}</div></div>
+</section>
+{% schema %}
+{
+  "name": "Mista contact support",
+  "tag": "section",
+  "class": "mista-contact-support-section",
+  "settings": [
+    { "type": "text", "id": "email_heading", "label": "Email heading", "default": "Email support" },
+    { "type": "text", "id": "whatsapp_heading", "label": "WhatsApp heading", "default": "WhatsApp support" },
+    { "type": "text", "id": "phone_heading", "label": "Phone heading", "default": "Phone support" },
+    { "type": "text", "id": "hours_heading", "label": "Hours heading", "default": "Support hours" },
+    { "type": "text", "id": "eyebrow", "label": "Form eyebrow", "default": "Contact us" },
+    { "type": "text", "id": "heading", "label": "Form heading", "default": "Send us a message" },
+    { "type": "richtext", "id": "text", "label": "Form intro" },
+    { "type": "text", "id": "name_label", "label": "Name label", "default": "Full name" },
+    { "type": "text", "id": "email_label", "label": "Email label", "default": "Email address" },
+    { "type": "text", "id": "subject_label", "label": "Subject label", "default": "Subject" },
+    { "type": "text", "id": "message_label", "label": "Message label", "default": "Your message" },
+    { "type": "text", "id": "submit_label", "label": "Submit label", "default": "Send message" },
+    { "type": "text", "id": "success_message", "label": "Success message", "default": "Thank you. Our support team will be in touch soon." },
+    { "type": "color", "id": "background", "label": "Background", "default": "#F7F1E8" }
+  ],
+  "presets": [{ "name": "Mista contact support" }]
+}
+{% endschema %}

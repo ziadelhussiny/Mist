@@ -1,0 +1,20 @@
+<section class="mista-collection-hero" style="min-height:{{ section.settings.height }}px">
+  <div class="mista-collection-hero__media">{% assign hero_image = section.settings.desktop_image | default: collection.featured_image %}{% if hero_image != blank %}<picture>{% if section.settings.mobile_image != blank %}<source media="(max-width:767px)" srcset="{{ section.settings.mobile_image | image_url: width: 900 }}">{% endif %}{{ hero_image | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '750,1100,1500,2000,2400', sizes: '100vw', alt: section.settings.image_alt | default: collection.title }}</picture>{% else %}<picture><source media="(max-width:767px)" srcset="{{ 'mista-hero-mobile.png' | asset_url }}"><img src="{{ 'mista-hero-desktop.png' | asset_url }}" width="1672" height="940" loading="eager" fetchpriority="high" alt="{{ collection.title | escape }}"></picture>{% endif %}</div>
+  <div class="mista-collection-hero__overlay" style="opacity:{{ section.settings.overlay | divided_by: 100.0 }}"></div><div class="mista-collection-hero__content"><div><p class="mista-eyebrow">{{ section.settings.eyebrow }}</p><h1 class="mista-heading">{{ collection.title }}</h1>{% if collection.description != blank %}<div class="mista-copy">{{ collection.description }}</div>{% else %}<div class="mista-copy">{{ section.settings.description }}</div>{% endif %}</div></div>
+</section>
+{% schema %}
+{
+  "name": "Mista collection hero",
+  "tag": "section",
+  "class": "mista-collection-hero-section",
+  "settings": [
+    { "type": "image_picker", "id": "desktop_image", "label": "Desktop banner image" },
+    { "type": "image_picker", "id": "mobile_image", "label": "Mobile banner image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our collection" },
+    { "type": "richtext", "id": "description", "label": "Fallback description", "default": "<p>Discover signature fragrances crafted for every mood and every moment.</p>" },
+    { "type": "range", "id": "height", "label": "Desktop height", "min": 260, "max": 640, "step": 20, "unit": "px", "default": 420 },
+    { "type": "range", "id": "overlay", "label": "Overlay strength", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 90 }
+  ]
+}
+{% endschema %}

@@ -1,6 +1,19 @@
 <section class="mista-section" style="--mista-section-bg:{{ section.settings.background }};--mista-columns:{{ section.settings.columns }};--mista-gap:{{ section.settings.gap }}px">
   <div class="mista-shell"><header class="mista-section-head mista-section-head--center"><p class="mista-eyebrow">{{ section.settings.eyebrow }}</p><h2 class="mista-heading mista-heading--section">{{ section.settings.heading }}</h2>{% if section.settings.text != blank %}<div class="mista-copy" style="margin-inline:auto">{{ section.settings.text }}</div>{% endif %}</header>
-    <div class="mista-social-grid">{% for block in section.blocks %}<a class="mista-social-card" href="{{ block.settings.link | default: settings.mista_instagram }}" {% if block.settings.link != blank %}target="_blank" rel="noopener"{% endif %} {{ block.shopify_attributes }}>{% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '240,360,540,720,900', sizes: '(min-width: 768px) 20vw, 50vw', alt: block.settings.alt }}{% else %}<span class="mista-social-card__placeholder" aria-hidden="true">M</span>{% endif %}<span class="visually-hidden">View Mista on social media</span></a>{% endfor %}</div>
+    <div class="mista-social-grid">{% for block in section.blocks %}{% liquid
+      case forloop.index
+        when 1
+          assign default_social_image = 'mista-product-black.png'
+        when 2
+          assign default_social_image = 'mista-product-pink.png'
+        when 3
+          assign default_social_image = 'mista-product-orange.png'
+        when 4
+          assign default_social_image = 'mista-product-turquoise.png'
+        else
+          assign default_social_image = 'mista-about-desktop.png'
+      endcase
+    %}<a class="mista-social-card" href="{{ block.settings.link | default: settings.mista_instagram }}" {% if block.settings.link != blank %}target="_blank" rel="noopener"{% endif %} {{ block.shopify_attributes }}>{% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '240,360,540,720,900', sizes: '(min-width: 768px) 20vw, 50vw', alt: block.settings.alt }}{% else %}<img src="{{ default_social_image | asset_url }}" width="1120" height="1400" loading="lazy" alt="{{ block.settings.alt | escape }}">{% endif %}<span class="visually-hidden">View Mista on social media</span></a>{% endfor %}</div>
   </div>
 </section>
 {% schema %}

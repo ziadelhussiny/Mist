@@ -1,0 +1,28 @@
+<section class="mista-section mista-section--compact" style="--mista-section-bg:{{ section.settings.background }}">
+  <div class="mista-shell"><form id="MistaCollectionFilters" action="{{ collection.url }}" method="get"><div class="mista-filter-bar"><div class="mista-filter-chips"><a class="mista-chip" href="{{ routes.all_products_collection_url }}" aria-current="{% if collection.handle == 'all' %}true{% else %}false{% endif %}">All</a>{% for block in section.blocks %}<a class="mista-chip" href="{{ block.settings.collection.url | default: routes.all_products_collection_url }}" aria-current="{% if block.settings.collection.handle == collection.handle %}true{% else %}false{% endif %}" {{ block.shopify_attributes }}>{{ block.settings.label | default: block.settings.collection.title }}</a>{% endfor %}</div><div class="mista-filter-sort"><label for="SortBy-{{ section.id }}">{{ section.settings.sort_label }}</label><select id="SortBy-{{ section.id }}" name="sort_by" onchange="this.form.submit()">{% assign sort_by = collection.sort_by | default: collection.default_sort_by %}{% for option in collection.sort_options %}<option value="{{ option.value | escape }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name | escape }}</option>{% endfor %}</select></div></div>
+    {% if section.settings.enable_filtering and collection.filters.size > 0 %}<div class="mista-facets">{% for filter in collection.filters %}<details><summary>{{ filter.label }}{% if filter.active_values.size > 0 %} ({{ filter.active_values.size }}){% endif %}</summary><div class="mista-facets__panel">{% case filter.type %}{% when 'boolean', 'list' %}{% for value in filter.values %}<label class="mista-chip"><input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %}>{{ value.label }} ({{ value.count }})</label>{% endfor %}{% when 'price_range' %}<label>Min <input type="number" name="{{ filter.min_value.param_name }}" value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}" min="0" max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"></label><label>Max <input type="number" name="{{ filter.max_value.param_name }}" value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}" min="0" max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"></label>{% endcase %}<button class="mista-button mista-button--primary" type="submit">{{ section.settings.apply_label }}</button></div></details>{% endfor %}</div>{% endif %}</form>
+    {% paginate collection.products by section.settings.products_per_page %}<div class="mista-product-grid" style="--mista-columns:4;--mista-gap:{{ section.settings.gap }}px">{% for product in collection.products %}{% render 'mista-product-card', product: product %}{% if forloop.index == section.settings.promo_position %}<a class="mista-collection-card" href="{{ section.settings.promo_link }}" style="min-height:0"><span style="position:absolute;inset:0">{% if section.settings.promo_image != blank %}{{ section.settings.promo_image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '360,540,760,1000', sizes: '(min-width:990px) 25vw, 50vw', alt: section.settings.promo_heading }}{% else %}<img src="{{ 'mista-product-black.png' | asset_url }}" width="1120" height="1400" loading="lazy" alt="{{ section.settings.promo_heading | escape }}">{% endif %}</span><span class="mista-collection-card__overlay"></span><span class="mista-collection-card__content"><h3>{{ section.settings.promo_heading }}</h3><span>{{ section.settings.promo_label }}</span></span></a>{% endif %}{% else %}<p>{{ section.settings.empty_text }}</p>{% endfor %}</div>{% if paginate.pages > 1 %}<nav class="mista-pagination" aria-label="Pagination">{{ paginate | default_pagination }}</nav>{% endif %}{% endpaginate %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Mista collection grid",
+  "tag": "section",
+  "class": "mista-collection-products-section",
+  "settings": [
+    { "type": "checkbox", "id": "enable_filtering", "label": "Enable Shopify filters", "default": true },
+    { "type": "text", "id": "sort_label", "label": "Sort label", "default": "Sort by" },
+    { "type": "text", "id": "apply_label", "label": "Apply label", "default": "Apply" },
+    { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 8, "max": 32, "step": 4, "default": 16 },
+    { "type": "range", "id": "gap", "label": "Grid gap", "min": 4, "max": 32, "step": 2, "unit": "px", "default": 16 },
+    { "type": "text", "id": "empty_text", "label": "Empty message", "default": "No fragrances match these filters." },
+    { "type": "image_picker", "id": "promo_image", "label": "Promo card image" },
+    { "type": "text", "id": "promo_heading", "label": "Promo heading", "default": "More than a scent" },
+    { "type": "text", "id": "promo_label", "label": "Promo label", "default": "Discover the story" },
+    { "type": "url", "id": "promo_link", "label": "Promo link" },
+    { "type": "range", "id": "promo_position", "label": "Insert after product", "min": 1, "max": 12, "step": 1, "default": 7 },
+    { "type": "color", "id": "background", "label": "Background", "default": "#F7F1E8" }
+  ],
+  "blocks": [{ "type": "filter_chip", "name": "Collection chip", "limit": 8, "settings": [{ "type": "collection", "id": "collection", "label": "Collection" }, { "type": "text", "id": "label", "label": "Label" }] }]
+}
+{% endschema %}

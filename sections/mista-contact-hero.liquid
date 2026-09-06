@@ -1,0 +1,22 @@
+<section class="mista-editorial-hero" style="min-height:{{ section.settings.height }}px">
+  <div class="mista-editorial-hero__media">{% if section.settings.desktop_image != blank %}<picture>{% if section.settings.mobile_image != blank %}<source media="(max-width:767px)" srcset="{{ section.settings.mobile_image | image_url: width: 900 }}">{% endif %}{{ section.settings.desktop_image | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '750,1100,1500,2000,2400', sizes: '100vw', alt: section.settings.image_alt }}</picture>{% else %}<picture><source media="(max-width:767px)" srcset="{{ 'mista-contact-mobile.png' | asset_url }}"><img src="{{ 'mista-contact-desktop.png' | asset_url }}" width="1672" height="940" loading="eager" fetchpriority="high" alt="{{ section.settings.image_alt | escape }}"></picture>{% endif %}</div>
+  <div class="mista-editorial-hero__overlay mista-editorial-hero__overlay--dark" style="opacity:{{ section.settings.overlay | divided_by: 100.0 }}"></div><div class="mista-editorial-hero__content"><div class="mista-contact-hero-copy"><p class="mista-eyebrow">{{ section.settings.eyebrow }}</p><h1 class="mista-heading">{{ section.settings.heading }}</h1><div class="mista-copy">{{ section.settings.text }}</div></div></div>
+</section>
+{% schema %}
+{
+  "name": "Mista contact hero",
+  "tag": "section",
+  "class": "mista-contact-hero-section",
+  "settings": [
+    { "type": "image_picker", "id": "desktop_image", "label": "Desktop banner image" },
+    { "type": "image_picker", "id": "mobile_image", "label": "Mobile banner image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "Amber and black Mista perfume bottles with gold monograms" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "We’re here" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "We’re here for you" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Have a question? Our online support team is ready to help with orders, shipping, returns, and fragrance advice.</p>" },
+    { "type": "range", "id": "height", "label": "Desktop height", "min": 320, "max": 680, "step": 20, "unit": "px", "default": 500 },
+    { "type": "range", "id": "overlay", "label": "Overlay strength", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 80 }
+  ],
+  "presets": [{ "name": "Mista contact hero" }]
+}
+{% endschema %}
