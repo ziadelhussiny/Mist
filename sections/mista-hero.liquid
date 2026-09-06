@@ -5,7 +5,7 @@
         {% if section.settings.mobile_image != blank %}<source media="(max-width: 767px)" srcset="{{ section.settings.mobile_image | image_url: width: 900 }}">{% endif %}
         {{ section.settings.desktop_image | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '750,1000,1400,1800,2200,2400', sizes: '100vw', alt: section.settings.image_alt }}
       </picture>
-    {% else %}<picture><source media="(max-width: 767px)" srcset="{{ 'mista-hero-mobile.png' | asset_url }}"><img src="{{ 'mista-hero-desktop.png' | asset_url }}" width="1672" height="940" loading="eager" fetchpriority="high" alt="{{ section.settings.image_alt | escape }}"></picture>{% endif %}
+    {% else %}<picture><source media="(max-width: 767px)" srcset="{{ 'mista-hero-mobile-480.webp' | asset_url }} 480w, {{ 'mista-hero-mobile-800.webp' | asset_url }} 800w, {{ 'mista-hero-mobile.webp' | asset_url }} 1122w" sizes="100vw"><img src="{{ 'mista-hero-desktop-1440.webp' | asset_url }}" srcset="{{ 'mista-hero-desktop-960.webp' | asset_url }} 960w, {{ 'mista-hero-desktop-1440.webp' | asset_url }} 1440w, {{ 'mista-hero-desktop.webp' | asset_url }} 1672w" sizes="100vw" width="1672" height="940" loading="eager" fetchpriority="high" decoding="sync" alt="{{ section.settings.image_alt | escape }}"></picture>{% endif %}
   </div>
   <div class="mista-hero__overlay"></div>
   <div class="mista-hero__content">

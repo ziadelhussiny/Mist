@@ -21,7 +21,7 @@
           {{ card_product.media[1] | image_url: width: 900 | image_tag: loading: 'lazy', widths: '240,360,480,640,900', sizes: '(min-width: 990px) 25vw, 50vw', class: 'mista-product-card__image mista-product-card__image--secondary', alt: card_product.media[1].alt | default: card_product.title }}
         {% endif %}
       {% else %}
-        <img class="mista-product-card__image" src="{{ 'mista-product-black.png' | asset_url }}" width="1120" height="1400" loading="lazy" alt="Mista black perfume bottle with gold monogram">
+        <img class="mista-product-card__image" src="{{ 'mista-product-black-640.webp' | asset_url }}" srcset="{{ 'mista-product-black-360.webp' | asset_url }} 360w, {{ 'mista-product-black-640.webp' | asset_url }} 640w, {{ 'mista-product-black-900.webp' | asset_url }} 900w, {{ 'mista-product-black.webp' | asset_url }} 1122w" sizes="(min-width: 990px) 25vw, 50vw" width="1122" height="1402" loading="lazy" decoding="async" alt="Mista black perfume bottle with gold monogram">
       {% endif %}
     </a>
     {% if badge != blank %}<span class="mista-badge mista-badge--{% if badge == 'Sale' %}sale{% elsif badge == 'Sold out' %}sold{% else %}light{% endif %}">{{ badge }}</span>{% endif %}

@@ -7,17 +7,22 @@
         {% liquid
           case forloop.index
             when 1
-              assign default_collection_image = 'mista-product-black.png'
+              assign default_collection_color = 'black'
             when 2
-              assign default_collection_image = 'mista-product-pink.png'
+              assign default_collection_color = 'pink'
             when 3
-              assign default_collection_image = 'mista-product-orange.png'
+              assign default_collection_color = 'orange'
             else
-              assign default_collection_image = 'mista-product-turquoise.png'
+              assign default_collection_color = 'turquoise'
           endcase
+          assign default_collection_image = 'mista-product-' | append: default_collection_color | append: '-640.webp'
+          assign default_collection_image_360 = 'mista-product-' | append: default_collection_color | append: '-360.webp'
+          assign default_collection_image_640 = 'mista-product-' | append: default_collection_color | append: '-640.webp'
+          assign default_collection_image_900 = 'mista-product-' | append: default_collection_color | append: '-900.webp'
+          assign default_collection_image_full = 'mista-product-' | append: default_collection_color | append: '.webp'
         %}
         <a class="mista-collection-card" href="{{ featured_collection.url | default: routes.collections_url }}" {{ block.shopify_attributes }}>
-          {% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '360,540,760,1000,1200', sizes: '(min-width: 768px) 33vw, 50vw', alt: block.settings.title | default: featured_collection.title }}{% elsif featured_collection.featured_image %}{{ featured_collection.featured_image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '360,540,760,1000,1200', sizes: '(min-width: 768px) 33vw, 50vw', alt: featured_collection.title }}{% else %}<img src="{{ default_collection_image | asset_url }}" width="1120" height="1400" loading="lazy" alt="{{ block.settings.title | default: 'Mista perfume collection' | escape }}">{% endif %}
+          {% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '360,540,760,1000,1200', sizes: '(min-width: 768px) 33vw, 50vw', alt: block.settings.title | default: featured_collection.title }}{% elsif featured_collection.featured_image %}{{ featured_collection.featured_image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '360,540,760,1000,1200', sizes: '(min-width: 768px) 33vw, 50vw', alt: featured_collection.title }}{% else %}<img src="{{ default_collection_image | asset_url }}" srcset="{{ default_collection_image_360 | asset_url }} 360w, {{ default_collection_image_640 | asset_url }} 640w, {{ default_collection_image_900 | asset_url }} 900w, {{ default_collection_image_full | asset_url }} 1122w" sizes="(min-width: 768px) 33vw, 50vw" width="1122" height="1402" loading="lazy" decoding="async" alt="{{ block.settings.title | default: 'Mista perfume collection' | escape }}">{% endif %}
           <span class="mista-collection-card__overlay"></span><span class="mista-collection-card__content"><h3>{{ block.settings.title | default: featured_collection.title | default: 'Signature scents' }}</h3><span>{{ block.settings.link_label }}</span></span>
         </a>
       {% endfor %}

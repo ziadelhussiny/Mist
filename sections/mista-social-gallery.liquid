@@ -3,17 +3,22 @@
     <div class="mista-social-grid">{% for block in section.blocks %}{% liquid
       case forloop.index
         when 1
-          assign default_social_image = 'mista-product-black.png'
+          assign default_social_color = 'black'
         when 2
-          assign default_social_image = 'mista-product-pink.png'
+          assign default_social_color = 'pink'
         when 3
-          assign default_social_image = 'mista-product-orange.png'
+          assign default_social_color = 'orange'
         when 4
-          assign default_social_image = 'mista-product-turquoise.png'
+          assign default_social_color = 'turquoise'
         else
-          assign default_social_image = 'mista-about-desktop.png'
+          assign default_social_color = 'black'
       endcase
-    %}<a class="mista-social-card" href="{{ block.settings.link | default: settings.mista_instagram }}" {% if block.settings.link != blank %}target="_blank" rel="noopener"{% endif %} {{ block.shopify_attributes }}>{% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '240,360,540,720,900', sizes: '(min-width: 768px) 20vw, 50vw', alt: block.settings.alt }}{% else %}<img src="{{ default_social_image | asset_url }}" width="1120" height="1400" loading="lazy" alt="{{ block.settings.alt | escape }}">{% endif %}<span class="visually-hidden">View Mista on social media</span></a>{% endfor %}</div>
+      assign default_social_image = 'mista-product-' | append: default_social_color | append: '-640.webp'
+      assign default_social_image_360 = 'mista-product-' | append: default_social_color | append: '-360.webp'
+      assign default_social_image_640 = 'mista-product-' | append: default_social_color | append: '-640.webp'
+      assign default_social_image_900 = 'mista-product-' | append: default_social_color | append: '-900.webp'
+      assign default_social_image_full = 'mista-product-' | append: default_social_color | append: '.webp'
+    %}<a class="mista-social-card" href="{{ block.settings.link | default: settings.mista_instagram }}" {% if block.settings.link != blank %}target="_blank" rel="noopener"{% endif %} {{ block.shopify_attributes }}>{% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '240,360,540,720,900', sizes: '(min-width: 768px) 20vw, 50vw', alt: block.settings.alt }}{% else %}<img src="{{ default_social_image | asset_url }}" srcset="{{ default_social_image_360 | asset_url }} 360w, {{ default_social_image_640 | asset_url }} 640w, {{ default_social_image_900 | asset_url }} 900w, {{ default_social_image_full | asset_url }} 1122w" sizes="(min-width: 768px) 20vw, 50vw" width="1122" height="1402" loading="lazy" decoding="async" alt="{{ block.settings.alt | escape }}">{% endif %}<span class="visually-hidden">View Mista on social media</span></a>{% endfor %}</div>
   </div>
 </section>
 {% schema %}

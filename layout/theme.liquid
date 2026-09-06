@@ -23,7 +23,7 @@
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
     {%- render 'color-palette' -%}
-    {{ 'mista-theme.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'mista-theme.min.css' | asset_url | stylesheet_tag: preload: true }}
     <script type="module" src="{{ 'mista-theme.js' | asset_url }}" fetchpriority="low"></script>
 
     {% if request.design_mode %}
