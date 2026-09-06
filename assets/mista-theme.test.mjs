@@ -29,15 +29,21 @@ test('buildCartPayload normalizes variant and quantity values', () => {
   });
 });
 
-test('header scrolls with the document on desktop and mobile instead of staying sticky', () => {
+test('header stays visible while scrolling up or down on desktop and mobile', () => {
   assert.match(
     themeCss,
-    /\.mista-header-wrap\s*\{[^}]*position:\s*relative;/
+    /#header-group:has\(\.mista-header-section\)\s*\{[^}]*display:\s*contents;/
   );
-  assert.doesNotMatch(themeCss, /\.mista-header-wrap\s*\{[^}]*position:\s*sticky;/);
   assert.match(
     themeCss,
-    /\.mista-mobile-menu\s*\{[^}]*position:\s*absolute;[^}]*inset-block-start:\s*100%;/
+    /\.mista-header-section\s*\{[^}]*position:\s*sticky;[^}]*top:\s*0;/
+  );
+});
+
+test('editorial hero copy is centered inside the page gutter instead of touching the viewport edge', () => {
+  assert.match(
+    themeCss,
+    /\.mista-editorial-hero__content\s*\{[^}]*width:\s*var\(--mista-page\);[^}]*margin-inline:\s*auto;/
   );
 });
 
