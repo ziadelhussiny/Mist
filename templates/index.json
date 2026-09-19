@@ -324,8 +324,8 @@
         "collection": "frontpage",
         "products": [],
         "button_label": "Shop all",
-        "products_to_show": 4,
-        "columns": 4,
+        "products_to_show": 5,
+        "columns": 5,
         "gap": 16,
         "background": "#f7f1e8"
       }

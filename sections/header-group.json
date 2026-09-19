@@ -11,8 +11,29 @@
   "type": "header",
   "name": "Header group",
   "sections": {
-    "mista_announcement": { "type": "mista-announcement", "settings": {} },
-    "mista_header": { "type": "mista-header", "settings": {} }
+    "mista_announcement": {
+      "type": "mista-announcement",
+      "disabled": true,
+      "settings": {
+        "show": true,
+        "text": "<p>Free shipping on orders over $75</p>",
+        "background": "#0d1b2a",
+        "text_color": "#ffffff"
+      }
+    },
+    "mista_header": {
+      "type": "mista-header",
+      "settings": {
+        "menu": "main-menu",
+        "logo_height": 42,
+        "show_search": true,
+        "show_wishlist": true,
+        "wishlist_url": ""
+      }
+    }
   },
-  "order": ["mista_announcement", "mista_header"]
+  "order": [
+    "mista_announcement",
+    "mista_header"
+  ]
 }
