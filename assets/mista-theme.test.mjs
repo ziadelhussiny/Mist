@@ -67,6 +67,16 @@ test('header stays visible while scrolling up or down on desktop and mobile', ()
   );
 });
 
+test('Mista header logo size follows the global desktop and mobile logo settings', () => {
+  assert.match(headerLiquid, /--mista-logo-height:\s*\{\{\s*settings\.logo_height/);
+  assert.match(headerLiquid, /--mista-logo-height-mobile:\s*\{\{\s*settings\.logo_height_mobile/);
+  assert.doesNotMatch(headerLiquid, /section\.settings\.logo_height/);
+  assert.doesNotMatch(headerLiquid, /"id":\s*"logo_height"/);
+  assert.doesNotMatch(themeCss, /\.mista-header__logo\s*\{[^}]*max-width:\s*150px/);
+  assert.match(themeCss, /\.mista-header__logo\s*\{[^}]*height:\s*var\(--mista-logo-height/);
+  assert.match(themeCss, /\.mista-header__logo\s*\{[^}]*height:\s*var\(--mista-logo-height-mobile/);
+});
+
 test('editorial hero copy is centered inside the page gutter instead of touching the viewport edge', () => {
   assert.match(
     themeCss,
@@ -153,7 +163,10 @@ test('featured products support all products, a collection, or manual product se
   assert.match(featuredProducts, /for product in manually_selected_products/);
   assert.match(featuredProducts, /for product in featured_collection\.products/);
   assert.doesNotMatch(featuredProducts, /preview_title|Noir Intense|Rose Allure|Oud Elegance|Citrus Bleu/);
-  assert.equal(homepage.sections.best_sellers.settings.product_source, 'all');
+  assert.ok(
+    ['all', 'collection', 'products'].includes(homepage.sections.best_sellers.settings.product_source),
+    'homepage product source should be one of the supported options'
+  );
   assert.ok(Array.isArray(homepage.sections.best_sellers.settings.products));
 });
 

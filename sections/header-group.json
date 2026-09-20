@@ -25,7 +25,6 @@
       "type": "mista-header",
       "settings": {
         "menu": "main-menu",
-        "logo_height": 42,
         "show_search": true,
         "show_wishlist": true,
         "wishlist_url": ""

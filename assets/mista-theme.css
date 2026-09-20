@@ -66,7 +66,7 @@ body {
 .mista-header-wrap { position: relative; z-index: 1; background: color-mix(in srgb, var(--mista-cream) 96%, transparent); border-bottom: 1px solid var(--mista-border); backdrop-filter: blur(14px); }
 .mista-header { min-height: 72px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; }
 .mista-header__brand { color: var(--mista-navy); text-decoration: none; display: inline-flex; align-items: center; gap: 10px; justify-self: start; }
-.mista-header__logo { width: auto; max-width: 150px; height: var(--mista-logo-height, 42px); object-fit: contain; }
+.mista-header__logo { width: auto; max-width: min(45vw, 320px); height: var(--mista-logo-height, 36px); object-fit: contain; }
 .mista-monogram { width: 34px; aspect-ratio: 1; display: grid; place-items: center; border: 2px solid currentColor; border-radius: 50%; font-family: Georgia, serif; font-size: 1.15rem; }
 .mista-wordmark { font-family: Georgia, serif; font-size: 1.05rem; font-weight: 700; letter-spacing: .14em; }
 .mista-nav { display: flex; align-items: center; justify-content: center; gap: clamp(18px, 2.5vw, 38px); }
@@ -318,6 +318,7 @@ body {
 
 @media (max-width: 767px) {
   :root { --mista-page: min(var(--mista-page-width, 1440px), calc(100% - 30px)); --mista-section-space: 46px; }
+  .mista-header__logo { height: var(--mista-logo-height-mobile, 28px); }
   .mista-section-head { align-items: start; margin-bottom: 24px; }
   .mista-section-head .mista-button { display: none; }
   .mista-hero { --mista-hero-min: 520px; align-items: end; }

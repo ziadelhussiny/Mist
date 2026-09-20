@@ -14,12 +14,12 @@
     endif
   endfor
 %}
-<div class="mista-header-wrap" style="--mista-logo-height:{{ section.settings.logo_height }}px">
+<div class="mista-header-wrap" style="--mista-logo-height:{{ settings.logo_height | default: 36 }}px;--mista-logo-height-mobile:{{ settings.logo_height_mobile | default: 28 }}px">
   <header class="mista-header mista-shell" role="banner">
     <button class="mista-icon-button mista-menu-toggle" type="button" data-mista-menu-toggle aria-label="Open menu" aria-expanded="false" aria-controls="MistaMobileMenu">{% render 'mista-icon', name: 'menu' %}</button>
     <a class="mista-header__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }} home">
       {% if settings.logo %}
-        {{ settings.logo | image_url: width: 360 | image_tag: widths: '120,180,240,360', class: 'mista-header__logo', loading: 'eager', alt: shop.name }}
+        {{ settings.logo | image_url: width: 720 | image_tag: widths: '120,180,240,360,480,720', class: 'mista-header__logo', loading: 'eager', alt: shop.name }}
       {% else %}
         <span class="mista-monogram" aria-hidden="true">M</span><span class="mista-wordmark">MISTA</span>
       {% endif %}
@@ -64,7 +64,6 @@
   "limit": 1,
   "settings": [
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
-    { "type": "range", "id": "logo_height", "label": "Logo height", "min": 28, "max": 70, "step": 2, "unit": "px", "default": 42 },
     { "type": "checkbox", "id": "show_search", "label": "Show search", "default": true },
     { "type": "checkbox", "id": "show_wishlist", "label": "Show wishlist", "default": true },
     { "type": "url", "id": "wishlist_url", "label": "Wishlist link" }
