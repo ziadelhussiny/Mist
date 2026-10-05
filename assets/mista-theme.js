@@ -162,16 +162,8 @@ function initDiscount() {
   });
 }
 
-function initLanguageSelectors() {
-  document.querySelectorAll('[data-mista-language-select]').forEach((select) => {
-    if (select.dataset.mistaLanguageReady === 'true') return;
-    select.dataset.mistaLanguageReady = 'true';
-    select.addEventListener('change', () => select.form?.requestSubmit());
-  });
-}
-
 function init() {
-  initMenu(); initAccordions(); initQuantity(); initGalleries(); initVariantPickers(); initAjaxCart(); initWishlist(); initDiscount(); initLanguageSelectors();
+  initMenu(); initAccordions(); initQuantity(); initGalleries(); initVariantPickers(); initAjaxCart(); initWishlist(); initDiscount();
 }
 
 if (typeof document !== 'undefined') {

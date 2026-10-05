@@ -35,34 +35,6 @@
     <div class="mista-header__actions">
       {% if section.settings.show_search %}<a class="mista-icon-button mista-search-action" href="{{ routes.search_url }}" aria-label="Search">{% render 'mista-icon', name: 'search' %}</a>{% endif %}
       {% if section.settings.show_wishlist %}<a class="mista-icon-button mista-wishlist-action" href="{{ section.settings.wishlist_url | default: routes.all_products_collection_url }}" aria-label="Wishlist">{% render 'mista-icon', name: 'heart' %}</a>{% endif %}
-      {% if section.settings.show_language and localization.available_languages.size > 1 %}
-        <div class="mista-language-switcher">
-          {% form 'localization', id: 'MistaLanguageForm', class: 'mista-language-form' %}
-            <label class="mista-language-control" for="MistaLanguageSelect">
-              {% render 'mista-icon', name: 'globe' %}
-              <span class="mista-language-code" aria-hidden="true">{{ localization.language.iso_code | upcase }}</span>
-              <span class="visually-hidden">{{ 'content.language' | t }}</span>
-              <select
-                id="MistaLanguageSelect"
-                class="mista-language-select"
-                name="language_code"
-                aria-label="{{ 'content.language' | t }}"
-                data-mista-language-select
-              >
-                {% for language in localization.available_languages %}
-                  <option
-                    value="{{ language.iso_code }}"
-                    lang="{{ language.iso_code }}"
-                    {% if language.iso_code == localization.language.iso_code %}selected{% endif %}
-                  >
-                    {{ language.endonym_name | capitalize }}
-                  </option>
-                {% endfor %}
-              </select>
-            </label>
-          {% endform %}
-        </div>
-      {% endif %}
       {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
         <button class="mista-icon-button" type="button" on:click="#cart-drawer/toggle" aria-haspopup="dialog" aria-expanded="false" aria-controls="cart-drawer" aria-label="Cart, {{ cart.item_count }} items">
           {% render 'mista-icon', name: 'bag' %}<span class="mista-cart-count" data-mista-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
@@ -84,53 +56,6 @@
     <a href="{{ routes.search_url }}">Search</a>
   </nav>
 </div>
-{% stylesheet %}
-  .mista-language-form {
-    margin: 0;
-  }
-
-  .mista-language-control {
-    position: relative;
-    min-width: 54px;
-    height: 42px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    color: var(--mista-navy);
-    cursor: pointer;
-  }
-
-  .mista-language-control:hover {
-    color: var(--mista-gold);
-  }
-
-  .mista-language-control:focus-within {
-    outline: 2px solid var(--mista-gold);
-    outline-offset: 2px;
-  }
-
-  .mista-language-control .mista-icon {
-    width: 20px;
-    height: 20px;
-  }
-
-  .mista-language-code {
-    font-size: 0.64rem;
-    font-weight: 750;
-    line-height: 1;
-    letter-spacing: 0.04em;
-  }
-
-  .mista-language-select {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-  }
-{% endstylesheet %}
 {% schema %}
 {
   "name": "Mista header",
@@ -141,8 +66,7 @@
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
     { "type": "checkbox", "id": "show_search", "label": "Show search", "default": true },
     { "type": "checkbox", "id": "show_wishlist", "label": "Show wishlist", "default": true },
-    { "type": "url", "id": "wishlist_url", "label": "Wishlist link" },
-    { "type": "checkbox", "id": "show_language", "label": "Show translation", "info": "Shows the language selector after you publish more than one language in Shopify Markets.", "default": true }
+    { "type": "url", "id": "wishlist_url", "label": "Wishlist link" }
   ],
   "presets": [{ "name": "Mista header" }]
 }

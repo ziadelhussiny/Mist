@@ -5,7 +5,6 @@ import { findVariant, formatMoney, buildCartPayload } from './mista-theme.js';
 
 const themeCss = readFileSync(new URL('./mista-theme.css', import.meta.url), 'utf8');
 const headerLiquid = readFileSync(new URL('../sections/mista-header.liquid', import.meta.url), 'utf8');
-const headerGroup = JSON.parse(readFileSync(new URL('../sections/header-group.json', import.meta.url), 'utf8'));
 const optimizedVisuals = [
   'mista-hero-desktop.webp',
   'mista-hero-mobile.webp',
@@ -89,26 +88,6 @@ test('About us is injected when the selected Shopify navigation does not contain
   assert.match(headerLiquid, /assign menu_has_about = false/);
   assert.match(headerLiquid, /unless menu_has_about[\s\S]*data-mista-about-link/);
   assert.match(headerLiquid, /pages\['about-us'\]/);
-});
-
-test('Mista header exposes an optional language switcher in the navbar', () => {
-  assert.match(headerLiquid, /"id":\s*"show_language"/);
-  assert.match(headerLiquid, /"label":\s*"Show translation"/);
-  assert.match(headerLiquid, /section\.settings\.show_language\s+and\s+localization\.available_languages\.size\s*>\s*1/);
-  assert.match(headerLiquid, /form\s+'localization'/);
-  assert.match(headerLiquid, /name="language_code"/);
-  assert.match(headerLiquid, /data-mista-language-select/);
-  assert.match(headerLiquid, /render 'mista-icon', name: 'globe'/);
-  assert.equal(headerGroup.sections.mista_header.settings.show_language, true);
-});
-
-test('language selection submits its Shopify localization form', () => {
-  const themeJs = readFileSync(new URL('./mista-theme.js', import.meta.url), 'utf8');
-
-  assert.match(themeJs, /function initLanguageSelectors\(\)/);
-  assert.match(themeJs, /\[data-mista-language-select\]/);
-  assert.match(themeJs, /select\.form\?\.requestSubmit\(\)/);
-  assert.match(themeJs, /initLanguageSelectors\(\)/);
 });
 
 test('bundled storefront visuals use WebP and stay inside the 250 KB image budget', () => {
