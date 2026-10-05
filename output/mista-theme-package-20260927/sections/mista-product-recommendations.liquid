@@ -1,0 +1,16 @@
+<script type="module" src="{{ 'product-recommendations.js' | asset_url }}" fetchpriority="low"></script>
+<product-recommendations data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}">
+  {% if recommendations.performed and recommendations.products_count > 0 %}
+    <section class="mista-section" style="--mista-section-bg:{{ section.settings.background }}">
+      <div class="mista-shell"><header class="mista-section-head mista-section-head--center"><p class="mista-eyebrow">{{ section.settings.eyebrow }}</p><h2 class="mista-heading mista-heading--section">{{ section.settings.heading }}</h2></header><div class="mista-product-grid" style="--mista-columns:{{ section.settings.columns }}">{% for product in recommendations.products %}{% render 'mista-product-card', product: product %}{% endfor %}</div></div>
+    </section>
+  {% endif %}
+</product-recommendations>
+{% schema %}
+{
+  "name": "Mista recommendations",
+  "tag": "section",
+  "class": "mista-recommendations-section",
+  "settings": [{ "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Complete your ritual" }, { "type": "text", "id": "heading", "label": "Heading", "default": "You may also like" }, { "type": "range", "id": "products_to_show", "label": "Products", "min": 2, "max": 8, "step": 1, "default": 4 }, { "type": "range", "id": "columns", "label": "Desktop columns", "min": 2, "max": 5, "step": 1, "default": 4 }, { "type": "color", "id": "background", "label": "Background", "default": "#F7F1E8" }]
+}
+{% endschema %}

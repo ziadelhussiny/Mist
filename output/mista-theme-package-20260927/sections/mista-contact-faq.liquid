@@ -1,0 +1,18 @@
+<section class="mista-section" style="--mista-section-bg:{{ section.settings.background }}">
+  <div class="mista-shell mista-faq"><header class="mista-section-head mista-section-head--center"><p class="mista-eyebrow">{{ section.settings.eyebrow }}</p><h2 class="mista-heading mista-heading--section">{{ section.settings.heading }}</h2>{% if section.settings.text != blank %}<div class="mista-copy" style="margin-inline:auto">{{ section.settings.text }}</div>{% endif %}</header><div class="mista-accordions">{% for block in section.blocks %}<div class="mista-accordion" {{ block.shopify_attributes }}><button class="mista-accordion__button" type="button" data-mista-accordion-button aria-expanded="false" aria-controls="ContactFaq-{{ section.id }}-{{ block.id }}"><span>{{ block.settings.question }}</span>{% render 'mista-icon', name: 'chevron' %}</button><div id="ContactFaq-{{ section.id }}-{{ block.id }}" class="mista-accordion__panel" hidden>{{ block.settings.answer }}</div></div>{% endfor %}</div></div>
+</section>
+{% schema %}
+{
+  "name": "Mista contact FAQ",
+  "tag": "section",
+  "class": "mista-contact-faq-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Quick answers" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Frequently asked questions" },
+    { "type": "richtext", "id": "text", "label": "Intro text" },
+    { "type": "color", "id": "background", "label": "Background", "default": "#FFFFFF" }
+  ],
+  "blocks": [{ "type": "faq", "name": "FAQ", "limit": 12, "settings": [{ "type": "text", "id": "question", "label": "Question", "default": "Where is my order?" }, { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Use the tracking link in your shipping confirmation email. If you need help, send us your order number.</p>" }] }],
+  "presets": [{ "name": "Mista contact FAQ", "blocks": [{ "type": "faq" }, { "type": "faq" }, { "type": "faq" }] }]
+}
+{% endschema %}

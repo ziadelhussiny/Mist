@@ -1,0 +1,6 @@
+﻿Handle,Title,Description,Collection type,Condition,Sort order,Published,SEO title,SEO description
+men,Men,"Confident fragrances built around woods, spice, citrus, and depth.",Manual,,Best selling,TRUE,Men’s Perfume | Mista Perfume,Shop Mista fragrances for men.
+women,Women,"Luminous floral, rose, musk, and amber compositions.",Manual,,Best selling,TRUE,Women’s Perfume | Mista Perfume,Shop Mista fragrances for women.
+unisex,Unisex,Distinctive fragrances designed beyond convention.,Manual,,Best selling,TRUE,Unisex Perfume | Mista Perfume,Shop unisex Mista fragrances.
+discovery-sets,Discovery Sets,Curated miniature fragrances for gifting and scent discovery.,Manual,,Best selling,TRUE,Perfume Discovery Sets | Mista Perfume,Explore Mista perfume discovery sets.
+best-sellers,Best Sellers,The fragrances customers return to most.,Automated,Product tag is equal to Best Seller,Best selling,TRUE,Best-Selling Perfumes | Mista Perfume,Discover Mista’s best-selling fragrances.

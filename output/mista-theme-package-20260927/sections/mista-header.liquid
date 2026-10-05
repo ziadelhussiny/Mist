@@ -1,0 +1,73 @@
+{% liquid
+  assign nav_menu = section.settings.menu
+  assign about_page = pages['about-us']
+  assign about_url = '/pages/about-us'
+  if about_page != blank
+    assign about_url = about_page.url
+  endif
+
+  assign menu_has_about = false
+  for link in nav_menu.links
+    assign normalized_title = link.title | downcase
+    if link.url contains '/pages/about' or normalized_title contains 'about'
+      assign menu_has_about = true
+    endif
+  endfor
+%}
+<div class="mista-header-wrap" style="--mista-logo-height:{{ settings.logo_height | default: 36 }}px;--mista-logo-height-mobile:{{ settings.logo_height_mobile | default: 28 }}px">
+  <header class="mista-header mista-shell" role="banner">
+    <button class="mista-icon-button mista-menu-toggle" type="button" data-mista-menu-toggle aria-label="Open menu" aria-expanded="false" aria-controls="MistaMobileMenu">{% render 'mista-icon', name: 'menu' %}</button>
+    <a class="mista-header__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }} home">
+      {% if settings.logo %}
+        {{ settings.logo | image_url: width: 720 | image_tag: widths: '120,180,240,360,480,720', class: 'mista-header__logo', loading: 'eager', alt: shop.name }}
+      {% else %}
+        <span class="mista-monogram" aria-hidden="true">M</span><span class="mista-wordmark">MISTA</span>
+      {% endif %}
+    </a>
+    <nav class="mista-nav" aria-label="Primary navigation">
+      {% if nav_menu.links.size > 0 %}
+        {% for link in nav_menu.links %}<a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a>{% endfor %}
+      {% else %}
+        <a href="{{ routes.root_url }}">Home</a><a href="{{ routes.all_products_collection_url }}">Shop</a><a href="{{ routes.collections_url }}">Collections</a><a href="/pages/contact">Contact</a>
+      {% endif %}
+      {% unless menu_has_about %}<a href="{{ about_url }}" data-mista-about-link {% if request.path == about_url %}aria-current="page"{% endif %}>About us</a>{% endunless %}
+    </nav>
+    <div class="mista-header__actions">
+      {% if section.settings.show_search %}<a class="mista-icon-button mista-search-action" href="{{ routes.search_url }}" aria-label="Search">{% render 'mista-icon', name: 'search' %}</a>{% endif %}
+      {% if section.settings.show_wishlist %}<a class="mista-icon-button mista-wishlist-action" href="{{ section.settings.wishlist_url | default: routes.all_products_collection_url }}" aria-label="Wishlist">{% render 'mista-icon', name: 'heart' %}</a>{% endif %}
+      {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
+        <button class="mista-icon-button" type="button" on:click="#cart-drawer/toggle" aria-haspopup="dialog" aria-expanded="false" aria-controls="cart-drawer" aria-label="Cart, {{ cart.item_count }} items">
+          {% render 'mista-icon', name: 'bag' %}<span class="mista-cart-count" data-mista-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
+        </button>
+      {% else %}
+        <a class="mista-icon-button" href="{{ routes.cart_url }}" aria-label="Cart, {{ cart.item_count }} items">{% render 'mista-icon', name: 'bag' %}<span class="mista-cart-count" data-mista-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span></a>
+      {% endif %}
+    </div>
+  </header>
+</div>
+<div id="MistaMobileMenu" class="mista-mobile-menu" data-mista-menu hidden>
+  <nav aria-label="Mobile navigation">
+    {% if nav_menu.links.size > 0 %}
+      {% for link in nav_menu.links %}<a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a>{% endfor %}
+    {% else %}
+      <a href="{{ routes.root_url }}">Home</a><a href="{{ routes.all_products_collection_url }}">Shop</a><a href="{{ routes.collections_url }}">Collections</a><a href="/pages/contact">Contact</a>
+    {% endif %}
+    {% unless menu_has_about %}<a href="{{ about_url }}" data-mista-about-link {% if request.path == about_url %}aria-current="page"{% endif %}>About us</a>{% endunless %}
+    <a href="{{ routes.search_url }}">Search</a>
+  </nav>
+</div>
+{% schema %}
+{
+  "name": "Mista header",
+  "tag": "section",
+  "class": "mista-header-section",
+  "limit": 1,
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "checkbox", "id": "show_search", "label": "Show search", "default": true },
+    { "type": "checkbox", "id": "show_wishlist", "label": "Show wishlist", "default": true },
+    { "type": "url", "id": "wishlist_url", "label": "Wishlist link" }
+  ],
+  "presets": [{ "name": "Mista header" }]
+}
+{% endschema %}

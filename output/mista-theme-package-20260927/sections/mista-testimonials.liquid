@@ -1,0 +1,18 @@
+<section class="mista-section mista-testimonials" style="--mista-columns:{{ section.settings.columns }};--mista-gap:{{ section.settings.gap }}px">
+  <div class="mista-shell">
+    <header class="mista-section-head mista-section-head--center"><p class="mista-eyebrow">{{ section.settings.eyebrow }}</p><h2 class="mista-heading mista-heading--section">{{ section.settings.heading }}</h2></header>
+    <div class="mista-testimonial-grid">
+      {% for block in section.blocks %}<article class="mista-testimonial" {{ block.shopify_attributes }}><div class="mista-stars" aria-label="{{ block.settings.rating }} out of 5 stars"><span aria-hidden="true">★★★★★</span></div><blockquote>“{{ block.settings.quote }}”</blockquote><cite>{{ block.settings.author }}{% if block.settings.detail != blank %} · {{ block.settings.detail }}{% endif %}</cite></article>{% endfor %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Mista testimonials",
+  "tag": "section",
+  "class": "mista-testimonials-section",
+  "settings": [{ "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Loved by you" }, { "type": "text", "id": "heading", "label": "Heading", "default": "Stories in every scent" }, { "type": "range", "id": "columns", "label": "Desktop columns", "min": 2, "max": 4, "step": 1, "default": 3 }, { "type": "range", "id": "gap", "label": "Grid gap", "min": 8, "max": 36, "step": 2, "unit": "px", "default": 18 }],
+  "blocks": [{ "type": "testimonial", "name": "Testimonial", "limit": 6, "settings": [{ "type": "range", "id": "rating", "label": "Rating", "min": 1, "max": 5, "step": 1, "default": 5 }, { "type": "textarea", "id": "quote", "label": "Quote", "default": "Elegant, memorable, and somehow completely mine. The bottle is beautiful and the scent lasts all day." }, { "type": "text", "id": "author", "label": "Name", "default": "Mista customer" }, { "type": "text", "id": "detail", "label": "Detail", "default": "Verified buyer" }] }],
+  "presets": [{ "name": "Mista testimonials", "blocks": [{ "type": "testimonial" }, { "type": "testimonial" }, { "type": "testimonial" }] }]
+}
+{% endschema %}

@@ -1,16 +1,1 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
-{
-  "sections": {
-    "main": { "type": "mista-main-product", "settings": {} },
-    "recommendations": { "type": "mista-product-recommendations", "settings": { "products_to_show": 4, "columns": 4 } }
-  },
-  "order": ["main", "recommendations"]
-}
+{"sections":{"main":{"type":"mista-main-product","settings":{"add_label":"Add to cart","sold_label":"Sold out","buy_label":"Buy it now","shipping_text":"Free shipping on orders over $75","payment_text":"Secure payment","returns_text":"Easy returns","how_to_use":"<p>Apply to pulse points. Avoid rubbing the fragrance into the skin and allow it to develop naturally.<\/p>","shipping_returns":"<p>Orders are prepared with care. Delivery times and return eligibility are shown in your store policies.<\/p>","reviews_text":"Verified customer reviews appear here when a reviews app is connected.","top_notes_fallback":"Bergamot, lychee, pear","heart_notes_fallback":"Rose, peony, jasmine","base_notes_fallback":"Sandalwood, musk, amber"}},"recommendations":{"type":"mista-product-recommendations","settings":{"eyebrow":"Complete your ritual","heading":"You may also like","products_to_show":4,"columns":4,"background":"#f7f1e8"}},"1790851343bda39658":{"type":"_blocks","blocks":{"mpo_product_options_app_block_fUjN8J":{"type":"shopify:\/\/apps\/mpo-product-options\/blocks\/app-block\/edee1b5f-81e2-4f09-8399-b789f80c532d","settings":{"product":"{{product}}"}}},"block_order":["mpo_product_options_app_block_fUjN8J"],"settings":{"content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","align_baseline":false,"horizontal_alignment_flex_direction_column":"flex-start","vertical_alignment_flex_direction_column":"center","gap":12,"section_width":"page-width","section_height":"","section_height_custom":50,"background_media":"none","background_color":"","video_position":"cover","background_image_position":"cover","toggle_overlay":false,"overlay_color":"#00000026","overlay_style":"solid","gradient_direction":"to top","border":"none","border_width":1,"border_opacity":100,"border_color":"","border_radius":0,"padding-block-start":0,"padding-block-end":0}}},"order":["main","recommendations","1790851343bda39658"]}

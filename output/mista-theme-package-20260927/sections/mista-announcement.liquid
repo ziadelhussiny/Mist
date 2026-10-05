@@ -1,0 +1,20 @@
+{% if section.settings.show %}
+  <div class="mista-announcement" style="background:{{ section.settings.background }};color:{{ section.settings.text_color }}" role="region" aria-label="Announcement">
+    {{ section.settings.text }}
+  </div>
+{% endif %}
+{% schema %}
+{
+  "name": "Mista announcement",
+  "tag": "section",
+  "class": "mista-announcement-section",
+  "limit": 1,
+  "settings": [
+    { "type": "checkbox", "id": "show", "label": "Show announcement", "default": true },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Free shipping on orders over $75</p>" },
+    { "type": "color", "id": "background", "label": "Background", "default": "#0D1B2A" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#FFFFFF" }
+  ],
+  "presets": [{ "name": "Mista announcement" }]
+}
+{% endschema %}
