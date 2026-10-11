@@ -6,6 +6,7 @@ import { findVariant, formatMoney, buildCartPayload } from './mista-theme.js';
 const themeCss = readFileSync(new URL('./mista-theme.css', import.meta.url), 'utf8');
 const headerLiquid = readFileSync(new URL('../sections/mista-header.liquid', import.meta.url), 'utf8');
 const headerGroup = JSON.parse(readFileSync(new URL('../sections/header-group.json', import.meta.url), 'utf8'));
+const heroLiquid = readFileSync(new URL('../sections/mista-hero.liquid', import.meta.url), 'utf8');
 const optimizedVisuals = [
   'mista-hero-desktop.webp',
   'mista-hero-mobile.webp',
@@ -139,12 +140,31 @@ test('bundled fallback images provide responsive sizes instead of one oversized 
     assert.ok(statSync(asset).size <= 150_000, `${filename} exceeds 150 KB`);
   }
 
-  const hero = readFileSync(new URL('../sections/mista-hero.liquid', import.meta.url), 'utf8');
   const collections = readFileSync(new URL('../sections/mista-collections.liquid', import.meta.url), 'utf8');
-  assert.match(hero, /mista-hero-mobile-480\.webp[^\n]+480w/);
-  assert.match(hero, /mista-hero-desktop-960\.webp[^\n]+960w/);
+  assert.match(heroLiquid, /mista-hero-mobile-480\.webp[^\n]+480w/);
+  assert.match(heroLiquid, /mista-hero-desktop-960\.webp[^\n]+960w/);
   assert.match(collections, /append: '-360\.webp'/);
   assert.match(collections, /default_collection_image_360[^\n]+360w/);
+});
+
+test('Mista hero accepts separate responsive desktop and mobile video links', () => {
+  assert.match(heroLiquid, /"id":\s*"desktop_video_url"/);
+  assert.match(heroLiquid, /"id":\s*"mobile_video_url"/);
+  assert.match(heroLiquid, /"id":\s*"mobile_height"/);
+  assert.match(heroLiquid, /class="mista-hero__video mista-hero__video--desktop/);
+  assert.match(heroLiquid, /class="mista-hero__video mista-hero__video--mobile/);
+  assert.match(heroLiquid, /autoplay[\s\S]*loop[\s\S]*muted[\s\S]*playsinline/);
+  assert.match(heroLiquid, /src="{{ section\.settings\.desktop_video_url \| escape }}"/);
+  assert.match(heroLiquid, /src="{{ section\.settings\.mobile_video_url \| escape }}"/);
+});
+
+test('Mista hero videos keep image fallbacks and respect reduced motion', () => {
+  assert.match(heroLiquid, /<picture>/);
+  assert.match(heroLiquid, /@media \(max-width: 767px\)/);
+  assert.match(heroLiquid, /@media \(prefers-reduced-motion: reduce\)/);
+  assert.match(heroLiquid, /\.mista-hero__video\s*\{[\s\S]*display:\s*none\s*!important/);
+  assert.match(heroLiquid, /object-fit:\s*cover/);
+  assert.match(heroLiquid, /--mista-hero-min-mobile/);
 });
 
 test('storefront loads production-minified stylesheets', () => {

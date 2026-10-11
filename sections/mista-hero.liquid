@@ -1,4 +1,4 @@
-<section class="mista-hero" style="--mista-hero-min:{{ section.settings.height }}px;--mista-image-position:{{ section.settings.image_position }};--mista-overlay:{{ section.settings.overlay | divided_by: 100.0 }}">
+<section class="mista-hero" style="--mista-hero-min:{{ section.settings.height }}px;--mista-hero-min-mobile:{{ section.settings.mobile_height | default: 520 }}px;--mista-image-position:{{ section.settings.image_position }};--mista-overlay:{{ section.settings.overlay | divided_by: 100.0 }}">
   <div class="mista-hero__media">
     {% if section.settings.desktop_image != blank %}
       <picture>
@@ -6,6 +6,44 @@
         {{ section.settings.desktop_image | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '750,1000,1400,1800,2200,2400', sizes: '100vw', alt: section.settings.image_alt }}
       </picture>
     {% else %}<picture><source media="(max-width: 767px)" srcset="{{ 'mista-hero-mobile-480.webp' | asset_url }} 480w, {{ 'mista-hero-mobile-800.webp' | asset_url }} 800w, {{ 'mista-hero-mobile.webp' | asset_url }} 1122w" sizes="100vw"><img src="{{ 'mista-hero-desktop-1440.webp' | asset_url }}" srcset="{{ 'mista-hero-desktop-960.webp' | asset_url }} 960w, {{ 'mista-hero-desktop-1440.webp' | asset_url }} 1440w, {{ 'mista-hero-desktop.webp' | asset_url }} 1672w" sizes="100vw" width="1672" height="940" loading="eager" fetchpriority="high" decoding="sync" alt="{{ section.settings.image_alt | escape }}"></picture>{% endif %}
+
+    {% if section.settings.desktop_video_url != blank %}
+      <video
+        class="mista-hero__video mista-hero__video--desktop{% if section.settings.mobile_video_url != blank %} mista-hero__video--desktop-only{% endif %}"
+        autoplay
+        loop
+        muted
+        playsinline
+        preload="metadata"
+        aria-hidden="true"
+        tabindex="-1"
+        disablepictureinpicture
+      >
+        <source
+          src="{{ section.settings.desktop_video_url | escape }}"
+          {% if section.settings.mobile_video_url != blank %}media="(min-width: 768px)"{% endif %}
+        >
+      </video>
+    {% endif %}
+
+    {% if section.settings.mobile_video_url != blank %}
+      <video
+        class="mista-hero__video mista-hero__video--mobile{% if section.settings.desktop_video_url == blank %} mista-hero__video--all-screens{% endif %}"
+        autoplay
+        loop
+        muted
+        playsinline
+        preload="metadata"
+        aria-hidden="true"
+        tabindex="-1"
+        disablepictureinpicture
+      >
+        <source
+          src="{{ section.settings.mobile_video_url | escape }}"
+          {% if section.settings.desktop_video_url != blank %}media="(max-width: 767px)"{% endif %}
+        >
+      </video>
+    {% endif %}
   </div>
   <div class="mista-hero__overlay"></div>
   <div class="mista-hero__content">
@@ -20,12 +58,54 @@
     </div>
   </div>
 </section>
+{% stylesheet %}
+  .mista-hero__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--mista-image-position, center);
+  }
+
+  .mista-hero__video--mobile {
+    display: none;
+  }
+
+  .mista-hero__video--all-screens {
+    display: block;
+  }
+
+  @media (max-width: 767px) {
+    .mista-hero {
+      --mista-hero-min: var(--mista-hero-min-mobile, 520px);
+    }
+
+    .mista-hero__video--desktop-only {
+      display: none;
+    }
+
+    .mista-hero__video--mobile {
+      display: block;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mista-hero__video {
+      display: none !important;
+    }
+  }
+{% endstylesheet %}
 {% schema %}
 {
   "name": "Mista hero banner",
   "tag": "section",
   "class": "mista-hero-section",
   "settings": [
+    { "type": "header", "content": "Video background" },
+    { "type": "url", "id": "desktop_video_url", "label": "Desktop video link", "info": "Use a direct MP4 or WebM link, such as a video uploaded to Content > Files." },
+    { "type": "url", "id": "mobile_video_url", "label": "Mobile video link", "info": "Optional. Uses the desktop video when this is empty." },
+    { "type": "header", "content": "Fallback images" },
     { "type": "image_picker", "id": "desktop_image", "label": "Desktop banner image" },
     { "type": "image_picker", "id": "mobile_image", "label": "Mobile banner image" },
     { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "Mista perfume collection" },
@@ -37,6 +117,7 @@
     { "type": "text", "id": "secondary_label", "label": "Secondary button" },
     { "type": "url", "id": "secondary_link", "label": "Secondary link" },
     { "type": "range", "id": "height", "label": "Desktop height", "min": 420, "max": 820, "step": 20, "unit": "px", "default": 600 },
+    { "type": "range", "id": "mobile_height", "label": "Mobile height", "min": 420, "max": 820, "step": 20, "unit": "px", "default": 520 },
     { "type": "select", "id": "image_position", "label": "Image position", "options": [{ "value": "left center", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right center", "label": "Right" }], "default": "center" },
     { "type": "select", "id": "alignment", "label": "Text alignment", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }], "default": "left" },
     { "type": "range", "id": "overlay", "label": "Overlay strength", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 90 }
