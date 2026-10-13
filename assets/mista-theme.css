@@ -204,7 +204,10 @@ body {
 .mista-breadcrumb { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; color: var(--mista-muted); font-size: .7rem; }
 .mista-breadcrumb a { color: inherit; text-decoration: none; }
 .mista-product__grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(360px, .85fr); gap: clamp(36px, 6vw, 88px); align-items: start; }
+.mista-product__grid--media-right .mista-gallery { order: 2; }
+.mista-product__grid--media-right .mista-product__info { order: 1; }
 .mista-gallery { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 14px; }
+.mista-gallery--without-thumbnails { grid-template-columns: minmax(0, 1fr); }
 .mista-gallery__thumbs { display: flex; flex-direction: column; gap: 10px; }
 .mista-gallery__thumb { padding: 0; border: 1px solid transparent; background: var(--mista-beige); cursor: pointer; }
 .mista-gallery__thumb[aria-current='true'] { border-color: var(--mista-gold); }
@@ -213,16 +216,20 @@ body {
 .mista-gallery__main img { width: 100%; height: 100%; object-fit: contain; transition: transform .35s ease; }
 .mista-gallery__main:hover img { transform: scale(1.35); }
 .mista-product__info { position: sticky; top: 124px; }
+.mista-product-form { display: flex; flex-direction: column; gap: var(--mista-product-block-gap, 16px); }
+.mista-product-block { min-width: 0; }
 .mista-product__title-row { display: flex; align-items: start; justify-content: space-between; gap: 16px; }
 .mista-product__title { margin: 0; color: var(--mista-navy); font-family: Georgia, serif; font-size: clamp(2.25rem, 4vw, 4rem); font-weight: 400; line-height: 1; }
 .mista-product__description { color: var(--mista-muted); font-size: .9rem; line-height: 1.65; }
 .mista-product__prices { display: flex; align-items: baseline; gap: 12px; margin: 14px 0; color: var(--mista-navy); }
+.mista-product-block .mista-product__prices, .mista-product-block .mista-options, .mista-product-block .mista-trust-row, .mista-product-block .mista-notes { margin-block: 0; }
 .mista-product__prices strong { font-family: Georgia, serif; font-size: 1.55rem; }
 .mista-options { margin: 22px 0; }
 .mista-options fieldset { margin: 0 0 18px; padding: 0; border: 0; }
 .mista-options legend { margin-bottom: 9px; color: var(--mista-navy); font-size: .72rem; font-weight: 700; }
 .mista-options__list { display: flex; flex-wrap: wrap; gap: 8px; }
 .mista-quantity-row { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 10px; }
+.mista-quantity-row--single { grid-template-columns: minmax(0, 1fr); }
 .mista-quantity { display: grid; grid-template-columns: 40px 1fr 40px; min-height: 48px; border: 1px solid var(--mista-border); border-radius: var(--mista-button-radius, 3px); }
 .mista-quantity button { border: 0; background: transparent; cursor: pointer; color: var(--mista-navy); }
 .mista-quantity input { width: 100%; border: 0; border-radius: 0; background: transparent; color: var(--mista-navy); text-align: center; appearance: textfield; }
@@ -232,6 +239,7 @@ body {
 .mista-trust-item .mista-icon { width: 23px; color: var(--mista-gold); flex: 0 0 23px; }
 .mista-accordions { border-top: 1px solid var(--mista-border); }
 .mista-accordion { border-bottom: 1px solid var(--mista-border); }
+.mista-product-block--accordion:first-of-type { border-top: 1px solid var(--mista-border); }
 .mista-accordion__button { width: 100%; min-height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border: 0; background: transparent; color: var(--mista-navy); font-size: .74rem; font-weight: 700; text-align: left; cursor: pointer; }
 .mista-accordion__button .mista-icon { width: 17px; transition: rotate .2s ease; }
 .mista-accordion__button[aria-expanded='true'] .mista-icon { rotate: 180deg; }
@@ -357,6 +365,7 @@ body {
   .mista-filter-bar { align-items: flex-start; flex-direction: column; }
   .mista-filter-sort { width: 100%; justify-content: space-between; }
   .mista-product__grid { grid-template-columns: 1fr; }
+  .mista-product__grid--media-right .mista-gallery, .mista-product__grid--media-right .mista-product__info { order: initial; }
   .mista-gallery { display: block; }
   .mista-gallery__main { aspect-ratio: 4 / 4.8; }
   .mista-gallery__thumbs { flex-direction: row; order: 2; margin-top: 10px; overflow-x: auto; scrollbar-width: thin; }

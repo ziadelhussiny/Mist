@@ -217,3 +217,36 @@ test('collection hero copy keeps the global page gutter on desktop and mobile', 
     /\.mista-collection-hero__content\s*\{[^}]*width:\s*var\(--mista-page\);[^}]*margin-inline:\s*auto;/
   );
 });
+
+test('product information is composed from reorderable Shopify blocks', () => {
+  const mainProduct = readFileSync(new URL('../sections/mista-main-product.liquid', import.meta.url), 'utf8');
+  const productJavascript = readFileSync(new URL('./mista-theme.js', import.meta.url), 'utf8');
+  const productTemplate = JSON.parse(readFileSync(new URL('../templates/product.json', import.meta.url), 'utf8'));
+  const mainSection = productTemplate.sections.main;
+
+  assert.match(mainProduct, /for block in section\.blocks/);
+  assert.match(mainProduct, /case block\.type/);
+  assert.match(mainProduct, /block\.shopify_attributes/);
+  assert.match(mainProduct, /when '@app'[\s\S]*render block/);
+
+  for (const blockType of [
+    'title',
+    'rating',
+    'price',
+    'description',
+    'variant_picker',
+    'buy_buttons',
+    'trust_badges',
+    'accordion',
+    'fragrance_notes',
+    'custom_liquid',
+    '@app',
+  ]) {
+    assert.match(mainProduct, new RegExp(`"type":\\s*"${blockType.replace('@', '\\@')}"`));
+  }
+
+  assert.ok(mainSection.blocks, 'product template should seed editable information blocks');
+  assert.ok(Array.isArray(mainSection.block_order), 'product template should define the initial block order');
+  assert.equal(mainSection.block_order.length, Object.keys(mainSection.blocks).length);
+  assert.match(productJavascript, /event\.submitter\?\.matches\('\[data-mista-add\]'\)/);
+});

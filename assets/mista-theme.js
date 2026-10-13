@@ -118,7 +118,9 @@ function initAjaxCart() {
     const form = event.target.closest('[data-mista-ajax-cart]');
     if (!form || event.submitter?.name === 'checkout') return;
     event.preventDefault();
-    const button = form.querySelector('[type="submit"]');
+    const button = event.submitter?.matches('[data-mista-add]')
+      ? event.submitter
+      : form.querySelector('[data-mista-add]');
     const original = button?.textContent;
     if (button) { button.disabled = true; button.textContent = button.dataset.loadingLabel || 'Adding…'; }
     try {
