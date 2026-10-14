@@ -1,18 +1,68 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "footer",
   "name": "Footer group",
   "sections": {
-    "mista_newsletter": { "type": "mista-newsletter", "settings": {} },
+    "mista_newsletter": {
+      "type": "mista-newsletter",
+      "disabled": true,
+      "settings": {
+        "eyebrow": "Stay in the loop",
+        "heading": "A little luxury, delivered",
+        "text": "<p>Be the first to discover new scents, private offers, and stories from Mista.</p>",
+        "placeholder": "Enter your email address",
+        "button_label": "Subscribe",
+        "success_message": "Welcome to Mista.",
+        "background": "#e8d8c3",
+        "text_color": "#242424"
+      }
+    },
     "mista_footer": {
       "type": "mista-footer",
       "blocks": {
-        "shop_menu": { "type": "menu", "settings": { "heading": "Shop", "menu": "main-menu" } },
-        "service_menu": { "type": "menu", "settings": { "heading": "Customer care", "menu": "footer" } },
-        "about_menu": { "type": "menu", "settings": { "heading": "About Mista", "menu": "footer" } }
+        "shop_menu": {
+          "type": "menu",
+          "settings": {
+            "heading": "Shop",
+            "menu": "main-menu"
+          }
+        },
+        "service_menu": {
+          "type": "menu",
+          "settings": {
+            "heading": "Customer care",
+            "menu": "footer"
+          }
+        },
+        "about_menu": {
+          "type": "menu",
+          "settings": {
+            "heading": "About Mista",
+            "menu": "footer"
+          }
+        }
       },
-      "block_order": ["shop_menu", "service_menu", "about_menu"],
-      "settings": {}
+      "block_order": [
+        "shop_menu",
+        "service_menu",
+        "about_menu"
+      ],
+      "settings": {
+        "description": "Modern fragrance, thoughtfully composed. Mista is an online-only perfume house made for everyday rituals.",
+        "copyright": "All rights reserved."
+      }
     }
   },
-  "order": ["mista_newsletter", "mista_footer"]
+  "order": [
+    "mista_newsletter",
+    "mista_footer"
+  ]
 }
